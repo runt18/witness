@@ -41,3 +41,6 @@ Babel>=0.9.4
 
 # Playdoh glue
 -e git://github.com/mozilla/funfactory.git#egg=funfactory
+
+# BrowserID
+-e git://github.com/mozilla/django-browserid.git#egg=django-browserid

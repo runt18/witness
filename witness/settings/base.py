@@ -22,8 +22,11 @@ MINIFY_BUNDLES = {
 ROOT_URLCONF = '%s.urls' % PROJECT_MODULE
 
 INSTALLED_APPS = list(INSTALLED_APPS) + [
+    # Additional Mozilla shared apps.
+    'django_browserid',
     # Application base, containing global templates.
     '%s.base' % PROJECT_MODULE,
+    # Main application.
     'witness',
 ]
 
@@ -60,3 +63,8 @@ DOMAIN_METHODS['messages'] = [
 # ]
 
 LOGGING = dict(loggers=dict(playdoh = {'level': logging.DEBUG}))
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'django_browserid.BrowserIDBackend',
+)
