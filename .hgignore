@@ -1,0 +1,14 @@
+syntax: glob
+./.virtualenv
+./witness/settings/local.py
+*.py[co]
+.coverage
+docs/_gh-pages
+*-min.css
+*-all.css
+*-min.js
+*-all.js
+.noseids
+tmp/*
+*~
+*.mo
