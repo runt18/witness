@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include
 
-from .examples import urls
-
 from funfactory.monkeypatches import patch
 patch()
 
@@ -11,9 +9,6 @@ patch()
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Example:
-    (r'', include(urls)),
-
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
