@@ -1,46 +1,43 @@
 # Django stuff
 Django==1.3.1
--e git://github.com/jbalogh/django-multidb-router.git#egg=django-multidb-router
--e git://github.com/jsocol/django-cronjobs.git#egg=django-cronjobs
-
-# Forms
--e git://github.com/mozilla/happyforms.git#egg=happyforms
+-e git://github.com/jbalogh/django-multidb-router.git@72f73a32b1eae3027341b46c73e955e3e79708b7#egg=django-multidb-router
+-e git://github.com/jsocol/django-cronjobs.git@cfda8176c5c3a50d1b58fcf57e87e23c467789bd#egg=django-cronjobs
 
 # Templates
--e git://github.com/jbalogh/jingo.git#egg=jingo
--e git://github.com/jsocol/jingo-minify.git#egg=jingo-minify
-GitPython==0.1.7
+-e git://github.com/jbalogh/jingo.git@b4ecca1066bcd1eac87358b4c82902442d4eedc4#egg=jingo
+-e git://github.com/jsocol/jingo-minify.git@0548993d5c1fae5003aee47f6443f7c4df775453#egg=jingo-minify
+GitPython==0.3.2.RC1
 
 # Various tidbits
--e git://github.com/jsocol/commonware.git#egg=commonware
--e git://github.com/mozilla/nuggets.git#egg=nuggets
+-e git://github.com/jsocol/commonware.git@de48d09c4e3a27b2358c414c64067cd32f28e610#egg=commonware
+-e git://github.com/mozilla/nuggets.git@ce506882b6943ea45ea4f98290fc4ef23e09a083#egg=nuggets
 
 # Security
--e git://github.com/fwenzel/django-sha2.git#egg=django-sha2
--e git://github.com/jsocol/bleach.git#egg=bleach
--e git://github.com/mozilla/django-session-csrf.git#egg=django-session-csrf
+-e git://github.com/fwenzel/django-sha2.git@aa87553fdb2dba3011207820cda61fa1e8652f07#egg=django-sha2
+-e git://github.com/jsocol/bleach.git@3657f7e32a114fcee91ed795414e4debbc5a5925#egg=bleach
+-e git://github.com/mozilla/django-session-csrf.git@15492526b23cdad56fe3df1342e2d82ec5d17c18#egg=django-session-csrf
 cef==0.3
 
 # Celery: Message queue
-celery
-django-celery
+celery==2.1.4
+django-celery==2.1.4
 
 # L10n
-Babel>=0.9.4
--e git://github.com/clouserw/tower.git#egg=tower
--e git://github.com/fwenzel/django-mozilla-product-details#egg=django-mozilla-product-details
+Babel==0.9.5
+-e git://github.com/clouserw/tower.git@599b621a269a1ae47512f4822880db5a13bda9b5#egg=tower
+-e git://github.com/fwenzel/django-mozilla-product-details@5a59a50b2f49f4ff555e87ebecc4fe690e71e7b0#egg=django-mozilla-product-details
 
 # Mobile
--e git://github.com/jbalogh/django-mobility@644e0c1c58#egg=django-mobility
+-e git://github.com/jbalogh/django-mobility@644e0c1c58ce6a57d93043d39f2d3d65236fe04c#egg=django-mobility
 
 # Database migrations
--e git://github.com/andymckay/django-arecibo.git#egg=django-arecibo
+-e git://github.com/jbalogh/schematic.git@e749978cc06bda8ba655faf8d672ae270e25b5f5#egg=schematic
 
 # Error handling
--e git://github.com/jbalogh/schematic.git#egg=schematic
+-e git://github.com/andymckay/django-arecibo.git@11945618fdaa7dc832e7382b241547567a77f4e6#egg=django-arecibo
 
 # Playdoh glue
--e git://github.com/mozilla/funfactory.git#egg=funfactory
+-e git://github.com/mozilla/funfactory.git@85980cc1ea9425c2bfffd6d86af01ef50ebcac2e#egg=funfactory
 
 # BrowserID
 -e git://github.com/mozilla/django-browserid.git#egg=django-browserid

@@ -11,8 +11,8 @@ Sphinx==1.0.7
 # Testing
 nose==1.0.0
 mock==0.7.2
--e git://github.com/jbalogh/django-nose.git#egg=django_nose
--e git://github.com/jbalogh/test-utils.git#egg=test-utils
+-e git://github.com/jbalogh/django-nose.git@83c7867c3f90ff3c7c7471716da91b643e8b2c01#egg=django_nose
+-e git://github.com/jbalogh/test-utils.git@adabce61c6b2b65e8b4be0dcdf13a6a725875352#egg=test-utils
 
 # L10n
 translate-toolkit==1.8.0
