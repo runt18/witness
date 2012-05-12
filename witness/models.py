@@ -41,3 +41,6 @@ class Decision(models.Model):
                                    verbose_name=_('text of chosen action'))
     is_yes = models.BooleanField()
     is_no = models.BooleanField()
+
+    class Meta:
+        get_latest_by = "creation_time"

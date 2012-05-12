@@ -5,7 +5,7 @@
 
 {% block main %}
   <h1>{{ document_version.title }}</h1>
-  <div>{{ document_version.body|markdown }}</div>
+  <div>{{ document_version.text|markdown }}</div>
   {% if user.is_authenticated() %}
     {% if answered_yes or answered_no %}
       <p>{{ _('You have already signed this document.') }}</p>
