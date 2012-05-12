@@ -18,7 +18,8 @@ class DocumentVersion(models.Model):
     last_update_time = models.DateTimeField(auto_now=True)
     document = models.ForeignKey(Document)
     number = models.CharField(max_length=64, verbose_name=_('version number'))
-    title = models.CharField(max_length=128, verbose_name=_('full title of this version'))
+    title = models.CharField(max_length=128,
+                             verbose_name=_('full title of this version'))
     text = models.TextField(verbose_name=_('document text'))
     yes_action_text = models.CharField(max_length=64)
     no_action_text = models.CharField(max_length=64)
@@ -30,9 +31,13 @@ class Decision(models.Model):
     document_version = models.ForeignKey(DocumentVersion)
     user = models.ForeignKey(auth_models.User)
     email = models.EmailField(verbose_name=_("user's email address"))
-    full_name = models.CharField(max_length=128, verbose_name=_("user's full name"), blank=True)
+    full_name = models.CharField(max_length=128,
+                                 verbose_name=_("user's full name"),
+                                 blank=True)
     ip_address = models.CharField(max_length=64, verbose_name=_('IP address'))
-    text_hash = models.CharField(max_length=128, verbose_name=_('hash of document text'))
-    action_text = models.CharField(max_length=64, verbose_name=_('text of chosen action'))
+    text_hash = models.CharField(max_length=128,
+                                 verbose_name=_('hash of document text'))
+    action_text = models.CharField(max_length=64,
+                                   verbose_name=_('text of chosen action'))
     is_yes = models.BooleanField()
     is_no = models.BooleanField()
