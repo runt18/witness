@@ -7,27 +7,23 @@
   <h1>{{ document_version.title }}</h1>
   <div>{{ document_version.text|markdown }}</div>
   {% if user.is_authenticated() %}
-    {% if answered_yes or answered_no %}
-      <p>{{ _('You have already signed this document.') }}</p>
-    {% else %}
-      <form action='' method='post'>
-        {{ csrf() }}
-        <p>
-          {{ _('You will be signing this document with this identity:') }}
-          {{ user.email }}
-        </p>
-        {% if not answered_yes %}
-          <button type='submit' name='yes'>
-            {{ document_version.yes_action_text }}
-          </button>
-        {% endif %}
-        {% if not answered_no %}
-          <button type='submit' name='no'>
-            {{ document_version.no_action_text }}
-          </button>
-        {% endif %}
-      </form>
-    {% endif %}
+    <form action='' method='post'>
+      {{ csrf() }}
+      <p>
+        {{ _('You will be signing this document with this identity:') }}
+        {{ user.email }}
+      </p>
+      {% if not answered_yes %}
+        <button type='submit' name='yes'>
+          {{ document_version.yes_action_text }}
+        </button>
+      {% endif %}
+      {% if not answered_no %}
+        <button type='submit' name='no'>
+          {{ document_version.no_action_text }}
+        </button>
+      {% endif %}
+    </form>
   {% else %}
     <p>
       <a id='browserid' href='#'>
