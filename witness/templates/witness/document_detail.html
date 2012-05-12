@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  {{ document_version.title }}
+{% endblock %}
+
+{% block main %}
+  <h1>{{ document_version.title }}</h1>
+  <div>{{ document_version.body|markdown }}</div>
+  {% if user.is_authenticated() %}
+    {% if answered_yes or answered_no %}
+      <p>{{ _('You have already signed this document.') }}</p>
+    {% else %}
+      <form action='' method='post'>
+        {{ csrf() }}
+        <p>
+          {{ _('You will be signing this document with this identity:') }}
+          {{ user.email }}
+        </p>
+        {% if not answered_yes %}
+          <button type='submit' name='yes'>
+            {{ document_version.yes_action_text }}
+          </button>
+        {% endif %}
+        {% if not answered_no %}
+          <button type='submit' name='no'>
+            {{ document_version.no_action_text }}
+          </button>
+        {% endif %}
+      </form>
+    {% endif %}
+  {% else %}
+    <p>
+      <a id='browserid' href='#'>
+        {{ _('Authenticate to sign this document.') }}
+      </a>
+    </p>
+    <form action='{{ url('browserid_verify') }}' method='post'>
+      {{ csrf() }}
+      <input type='hidden' name='next'
+        value='{{ request.build_absolute_uri() }}'>
+      {{ browserid_form.as_p() }}
+    </form>
+  {% endif %}
+{% endblock %}

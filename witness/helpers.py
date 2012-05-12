@@ -1,9 +1,9 @@
 import jinja2
 
-import jingo
+from jingo import register
 
 import markdown as md
 
-@jingo.register.filter
+@register.filter
 def markdown(s):
     return jinja2.Markup(md.markdown(unicode(s)))
