@@ -10,13 +10,15 @@ from django.contrib.auth import models as auth_models
 class Document(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
-    name = models.CharField(max_length=128, verbose_name=_('name'))
+    title = models.CharField(max_length=128, verbose_name=_('title'))
+    slug = models.SlugField()
 
 class DocumentVersion(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
     document = models.ForeignKey(Document)
     number = models.CharField(max_length=64, verbose_name=_('version number'))
+    title = models.CharField(max_length=128, verbose_name=_('full title of this version'))
     text = models.TextField(verbose_name=_('document text'))
     yes_action_text = models.CharField(max_length=64)
     no_action_text = models.CharField(max_length=64)

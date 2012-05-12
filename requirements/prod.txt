@@ -45,3 +45,6 @@ Babel==0.9.5
 
 # BrowserID
 -e git://github.com/mozilla/django-browserid.git#egg=django-browserid
+
+# Markdown
+Markdown==2.1.1
