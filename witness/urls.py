@@ -13,8 +13,11 @@ patch()
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    (r'^(?P<document_slug>[-\w]+)/(?P<version_number>[-\.\w]+)/$',
+     'witness.views.document_detail'),
+
     # BrowserID
-    (r'^browserid/', include('django_browserid.urls')),
+    (r'', include('django_browserid.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
