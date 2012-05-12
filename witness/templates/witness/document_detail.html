@@ -7,12 +7,20 @@
   <h1>{{ document_version.title }}</h1>
   <div>{{ document_version.text|markdown }}</div>
   {% if user.is_authenticated() %}
+    {% if latest_decision %}
+      <p>
+        {% trans action_text=latest_decision.action_text,
+                 date=latest_decision.creation_time|date %}
+          You chose "{{ action_text }}" on {{ date }}.
+        {% endtrans %}
+      </p>
+    {% endif %}
+    <p>
+      {{ _('You will be signing this document with this identity:') }}
+      {{ user.email }}
+    </p>
     <form action='' method='post'>
       {{ csrf() }}
-      <p>
-        {{ _('You will be signing this document with this identity:') }}
-        {{ user.email }}
-      </p>
       {% if not answered_yes %}
         <button type='submit' name='yes'>
           {{ document_version.yes_action_text }}

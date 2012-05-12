@@ -14,6 +14,7 @@ def document_detail(request, document_slug, version_number):
                           number=version_number)
     answered_yes = False
     answered_no = False
+    latest_decision = None
     if request.user.is_authenticated():
         user = request.user
         decisions = \
@@ -41,5 +42,5 @@ def document_detail(request, document_slug, version_number):
             decision.save()
             return HttpResponse("TODO: post-signing page")
     data = {'document_version': document_version, 'answered_yes': answered_yes,
-            'answered_no': answered_no}
+            'answered_no': answered_no, "latest_decision": latest_decision}
     return render(request, 'witness/document_detail.html', data)
