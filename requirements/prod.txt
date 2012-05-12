@@ -35,7 +35,6 @@ Babel==0.9.5
 -e git://github.com/jbalogh/django-mobility@644e0c1c58ce6a57d93043d39f2d3d65236fe04c#egg=django-mobility
 
 # Database migrations
--e git://github.com/jbalogh/schematic.git@e749978cc06bda8ba655faf8d672ae270e25b5f5#egg=schematic
 
 # Error handling
 -e git://github.com/andymckay/django-arecibo.git@11945618fdaa7dc832e7382b241547567a77f4e6#egg=django-arecibo
