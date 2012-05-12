@@ -13,10 +13,14 @@ class Document(models.Model):
     title = models.CharField(max_length=128, verbose_name=_('title'))
     slug = models.SlugField()
 
+    @property
+    def latest_version(self):
+        return self.versions.latest()
+
 class DocumentVersion(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
-    document = models.ForeignKey(Document)
+    document = models.ForeignKey(Document, related_name='versions')
     number = models.CharField(max_length=64, verbose_name=_('version number'))
     title = models.CharField(max_length=128,
                              verbose_name=_('full title of this version'))
@@ -24,6 +28,9 @@ class DocumentVersion(models.Model):
     yes_action_text = models.CharField(max_length=64)
     no_action_text = models.CharField(max_length=64)
     is_retired = models.BooleanField(default=False)
+
+    class Meta:
+        get_latest_by = 'creation_time'
 
 class Decision(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
@@ -43,4 +50,4 @@ class Decision(models.Model):
     is_no = models.BooleanField()
 
     class Meta:
-        get_latest_by = "creation_time"
+        get_latest_by = 'creation_time'

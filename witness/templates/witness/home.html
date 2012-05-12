@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block page_title %}
+  {{ _('Home') }}
+{% endblock %}
+{% block main %}
+  <h1>{{ _('Home') }}</h1>
+  {% if documents %}
+    <h2>{{ _('All documents') }}</h2>
+    <ul>
+      {% for document in documents %}
+        <li>
+          <a href='{{ url('document_detail', document_slug=document.slug,
+                          version_number=document.latest_version.number) }}'>
+            {{ document.latest_version.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>{{ _('There are not any documents here.') }}</p>
+  {% endif %}
+{% endblock %}

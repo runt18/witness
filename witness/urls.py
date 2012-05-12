@@ -3,7 +3,7 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf import settings
-from django.conf.urls.defaults import patterns, include
+from django.conf.urls.defaults import patterns, include, url
 
 from funfactory.monkeypatches import patch
 patch()
@@ -13,8 +13,9 @@ patch()
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^(?P<document_slug>[-\w]+)/(?P<version_number>[-\.\w]+)/$',
-     'witness.views.document_detail'),
+    (r'^$', 'witness.views.home'),
+    url(r'^(?P<document_slug>[-\w]+)/(?P<version_number>[-\.\w]+)/$',
+        'witness.views.document_detail', name='document_detail'),
 
     # BrowserID
     (r'^browserid/', include('django_browserid.urls')),

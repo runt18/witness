@@ -8,6 +8,14 @@ from session_csrf import anonymous_csrf
 from witness import models
 
 @anonymous_csrf
+def home(request):
+    documents = [document for document in
+                 models.Document.objects.all().order_by("title")
+                 if document.versions.count() > 0]
+    data = {"documents": documents}
+    return render(request, "witness/home.html", data)
+
+@anonymous_csrf
 def document_detail(request, document_slug, version_number):
     document_version = \
         get_object_or_404(models.DocumentVersion, document__slug=document_slug,
