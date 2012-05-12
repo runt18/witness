@@ -19,6 +19,10 @@ MINIFY_BUNDLES = {
     'css': {
     },
     'js': {
+        'witness_js': (
+            'js/witness/libs/jquery-1.7.2.js',
+            'browserid/browserid.js',
+        ),
     },
 }
 

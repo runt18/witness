@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html LANG="{{ LANG }}" dir="{{ DIR }}">
+<html LANG='{{ LANG }}' dir='{{ DIR }}'>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <title>{% block page_title %}{% endblock %} - {{ _("Witness") }}</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <title>{% block page_title %}{% endblock %} - {{ _('Witness') }}</title>
 
     {% block site_css %}
     {% endblock %}
   </head>
-  <body data-mobile-cookie="{{ settings.MOBILE_COOKIE }}">
-    <div role="main">
+  <body data-mobile-cookie='{{ settings.MOBILE_COOKIE }}'>
+    <div role='main'>
       {% block main %}{% endblock %}
     </div>
 
     {% block site_js %}
+      <script src='https://browserid.org/include.js'></script>
+      {{ js('witness_js') }}
     {% endblock %}
   </body>
 </html>

@@ -17,7 +17,7 @@ urlpatterns = patterns('',
      'witness.views.document_detail'),
 
     # BrowserID
-    (r'', include('django_browserid.urls')),
+    (r'^browserid/', include('django_browserid.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
