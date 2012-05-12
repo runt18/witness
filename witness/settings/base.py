@@ -30,6 +30,8 @@ MINIFY_BUNDLES = {
 ROOT_URLCONF = '%s.urls' % PROJECT_MODULE
 
 INSTALLED_APPS = list(INSTALLED_APPS) + [
+    # Database migrations.
+    'south',
     # Additional Mozilla shared apps.
     'django_browserid',
     # Application base, containing global templates.
