@@ -39,7 +39,9 @@ def document_detail(request, document_slug, version_number):
                     return HttpResponse(status=400)
                 decision.action_text = document_version.no_action_text
                 decision.is_no = True
-            decision.save()
+            if not ((answered_yes and decision.is_yes) or
+                    (answered_no and decision.is_no)):
+                decision.save()
             return HttpResponse("TODO: post-signing page")
     data = {'document_version': document_version, 'answered_yes': answered_yes,
             'answered_no': answered_no, "latest_decision": latest_decision}
