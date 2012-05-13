@@ -10,7 +10,7 @@ from django.contrib.auth import models as auth_models
 class Document(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
-    title = models.CharField(max_length=128)
+    title = models.CharField(max_length=128, verbose_name=_('title'))
     slug = models.SlugField()
 
     @property
@@ -21,9 +21,10 @@ class DocumentVersion(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
     document = models.ForeignKey(Document, related_name='versions')
-    number = models.CharField(max_length=64)
-    title = models.CharField(max_length=128)
-    text = models.TextField()
+    number = models.CharField(max_length=64, verbose_name=_('version number'))
+    title = models.CharField(max_length=128,
+                             verbose_name=_('full title of this version'))
+    text = models.TextField(verbose_name=_('document text'))
     yes_action_text = models.CharField(max_length=64)
     no_action_text = models.CharField(max_length=64)
     is_retired = models.BooleanField(default=False)
@@ -36,11 +37,15 @@ class Decision(models.Model):
     last_update_time = models.DateTimeField(auto_now=True)
     document_version = models.ForeignKey(DocumentVersion)
     user = models.ForeignKey(auth_models.User)
-    email = models.EmailField()
-    full_name = models.CharField(max_length=128, blank=True)
-    ip_address = models.CharField(max_length=64)
-    text_hash = models.CharField(max_length=128)
-    action_text = models.CharField(max_length=64)
+    email = models.EmailField(verbose_name=_("user's email address"))
+    full_name = models.CharField(max_length=128,
+                                 verbose_name=_("user's full name"),
+                                 blank=True)
+    ip_address = models.CharField(max_length=64, verbose_name=_('IP address'))
+    text_hash = models.CharField(max_length=128,
+                                 verbose_name=_('hash of document text'))
+    action_text = models.CharField(max_length=64,
+                                   verbose_name=_('text of chosen action'))
     is_yes = models.BooleanField()
     is_no = models.BooleanField()
 
