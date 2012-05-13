@@ -48,3 +48,6 @@ South==0.7.5
 
 # Markdown
 Markdown==2.1.1
+
+# Deploymend
+gunicorn==0.14.2
