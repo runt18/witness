@@ -7,6 +7,15 @@
 {% endblock %}
 {% block main %}
   <h1>{{ _('Home') }}</h1>
+  {% if not user.is_authenticated() %}
+    <p>
+      <a id='browserid' href='#'>{{ _('Log in') }}</a>
+    </p>
+    <form action='{{ url('browserid_verify') }}' method='post'>
+      {{ csrf() }}
+      {{ browserid_form.as_p() }}
+    </form>
+  {% endif %}
   {% if documents %}
     <h2>{{ _('All documents') }}</h2>
     <ul>
@@ -20,6 +29,8 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>{{ _('There are not any documents here.') }}</p>
+    {% if not user.is_authenticated() %}
+      <p>{{ _('There are not any documents here.') }}</p>
+    {% endif %}
   {% endif %}
 {% endblock %}
