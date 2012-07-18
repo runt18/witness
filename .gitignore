@@ -1,6 +1,6 @@
 syntax: glob
-./.virtualenv
-./witness/settings/local.py
+.virtualenv
+witness/settings/local.py
 *.py[co]
 .coverage
 docs/_gh-pages
