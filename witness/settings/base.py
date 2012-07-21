@@ -40,6 +40,8 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     '%s.base' % PROJECT_MODULE,
     # Main application.
     'witness',
+    # Admin interface
+    'django.contrib.admin',
 ]
 
 

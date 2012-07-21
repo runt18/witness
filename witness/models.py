@@ -13,6 +13,9 @@ class Document(models.Model):
     title = models.CharField(max_length=128, verbose_name=_('title'))
     slug = models.SlugField()
 
+    def __unicode__(self):
+        return self.title
+
     @property
     def latest_version(self):
         return self.versions.latest()
@@ -28,6 +31,9 @@ class DocumentVersion(models.Model):
     yes_action_text = models.CharField(max_length=64)
     no_action_text = models.CharField(max_length=64)
     is_retired = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.title
 
     class Meta:
         get_latest_by = 'creation_time'
