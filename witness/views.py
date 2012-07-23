@@ -5,7 +5,7 @@
 import hashlib
 
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 from session_csrf import anonymous_csrf
 
@@ -54,7 +54,7 @@ def document_detail(request, document_slug, version_number):
             if not ((answered_yes and decision.is_yes) or
                     (answered_no and decision.is_no)):
                 decision.save()
-            return HttpResponse("TODO: post-signing page")
+                return redirect('/%s/%s/' % (document_slug, version_number))
     data = {'document_version': document_version, 'answered_yes': answered_yes,
             'answered_no': answered_no, "latest_decision": latest_decision}
     return render(request, 'witness/document_detail.html', data)
