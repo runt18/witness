@@ -41,7 +41,9 @@ class DocumentVersion(models.Model):
 class Decision(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
-    document_version = models.ForeignKey(DocumentVersion)
+    # Prevent deletion of the referenced object
+    document_version = models.ForeignKey(DocumentVersion,
+                                         on_delete=models.PROTECT)
     user = models.ForeignKey(auth_models.User)
     email = models.EmailField(verbose_name=_("user's email address"))
     full_name = models.CharField(max_length=128,
