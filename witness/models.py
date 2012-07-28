@@ -54,8 +54,10 @@ class Decision(models.Model):
                                  verbose_name=_('hash of document text'))
     action_text = models.CharField(max_length=64,
                                    verbose_name=_('text of chosen action'))
-    is_yes = models.BooleanField()
-    is_no = models.BooleanField()
+    is_agreed = models.BooleanField()
+
+    def __unicode__(self):
+        return "%s %s" % (self.document_version.title, self.action_text)
 
     class Meta:
         get_latest_by = 'creation_time'

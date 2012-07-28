@@ -24,12 +24,12 @@
     </p>
     <form action='' method='post'>
       {{ csrf() }}
-      {% if not answered_yes %}
+      {% if not latest_decision or not latest_decision.is_agreed %}
         <button type='submit' name='yes'>
           {{ document_version.yes_action_text }}
         </button>
       {% endif %}
-      {% if not answered_no %}
+      {% if not latest_decision or latest_decision.is_agreed %}
         <button type='submit' name='no'>
           {{ document_version.no_action_text }}
         </button>
