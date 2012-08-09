@@ -12,6 +12,11 @@ class DecisionAdmin(admin.ModelAdmin):
     ''' Prevent admins from manually tampering with the decision '''
     readonly_fields = Decision._meta.get_all_field_names()
 
+    def has_delete_permission(self, request, obj=None):
+        ''' Disable delete '''
+        return False
+    
+
 admin.site.register(Document)
 admin.site.register(DocumentVersion)
 admin.site.register(Decision, DecisionAdmin)
