@@ -9,8 +9,8 @@ from witness.models import Document, DocumentVersion, Decision
 admin.site.disable_action('delete_selected')
 
 class DecisionAdmin(admin.ModelAdmin):
-    ''' Prevent admins from manually tampering with the hash '''
-    readonly_fields=('text_hash',)
+    ''' Prevent admins from manually tampering with the decision '''
+    readonly_fields = Decision._meta.get_all_field_names()
 
 admin.site.register(Document)
 admin.site.register(DocumentVersion)
