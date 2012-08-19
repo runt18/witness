@@ -14,9 +14,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$', 'witness.views.home'),
-    url(r'^(?P<document_slug>[-\w]+)/(?P<version_number>[-\.\w]+)/$',
+    url(r'^document/(?P<document_slug>[-\w]+)/(?P<version_number>[-\.\w]+)/$',
         'witness.views.document_detail', name='document_detail'),
 
+    url(r'^logout/$', 
+        'django.contrib.auth.views.logout', 
+        {'next_page': '/'}, 
+        name='auth_logout'),
     # BrowserID
     (r'^browserid/', include('django_browserid.urls')),
 
