@@ -33,7 +33,7 @@ class DocumentVersion(models.Model):
     is_retired = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.title
+        return "Document: %s Version: %s" % (self.document, self.title)
 
     class Meta:
         get_latest_by = 'creation_time'
