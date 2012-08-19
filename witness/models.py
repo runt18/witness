@@ -28,8 +28,8 @@ class DocumentVersion(models.Model):
     title = models.CharField(max_length=128,
                              verbose_name=_('full title of this version'))
     text = models.TextField(verbose_name=_('document text'))
-    yes_action_text = models.CharField(max_length=64)
-    no_action_text = models.CharField(max_length=64)
+    yes_action_text = models.CharField(max_length=64, default="I agree")
+    no_action_text = models.CharField(max_length=64, default="I disagree")
     is_retired = models.BooleanField(default=False)
 
     def __unicode__(self):
