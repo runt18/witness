@@ -8,6 +8,14 @@ from witness.models import Document, DocumentVersion, Decision
 # Globally disable delete selected
 admin.site.disable_action('delete_selected')
 
+class DocumentVersionAdmin(admin.ModelAdmin):
+    def has_change_permission(self, request, obj=None):
+        ''' 
+        If a document version has been signed,
+        no one can edit it
+        '''
+        return (Decision.objects.filter(document_version=obj).count()==0)
+
 class DecisionAdmin(admin.ModelAdmin):
     ''' Prevent admins from manually tampering with the decision '''
     readonly_fields = Decision._meta.get_all_field_names()
@@ -18,5 +26,5 @@ class DecisionAdmin(admin.ModelAdmin):
     
 
 admin.site.register(Document)
-admin.site.register(DocumentVersion)
+admin.site.register(DocumentVersion, DocumentVersionAdmin)
 admin.site.register(Decision, DecisionAdmin)
