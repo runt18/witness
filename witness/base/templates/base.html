@@ -11,6 +11,13 @@
     {% endblock %}
   </head>
   <body data-mobile-cookie='{{ settings.MOBILE_COOKIE }}'>
+    {% if user.is_authenticated() %}
+        Hello, {{ user.email }}
+        {% if user.is_superuser %}
+            You are the admin
+        {% endif %}
+        <a href="{{ url('auth_logout') }}">Logout</a>
+    {% endif %}
     <div role='main'>
       {% block main %}{% endblock %}
     </div>
