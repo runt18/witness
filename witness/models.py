@@ -18,7 +18,10 @@ class Document(models.Model):
 
     @property
     def latest_version(self):
-        return self.versions.latest()
+        try:
+            return self.versions.latest()
+        except DocumentVersion.DoesNotExist:
+            return None
 
 class DocumentVersion(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
