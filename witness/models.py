@@ -11,7 +11,7 @@ class Document(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=128, verbose_name=_('title'))
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     def __unicode__(self):
         return self.title
