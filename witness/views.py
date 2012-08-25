@@ -4,6 +4,7 @@
 
 import hashlib
 
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 
@@ -52,7 +53,15 @@ def document_detail(request, document_slug, version_number):
                 not (latest_decision.is_agreed and decision.is_agreed)):
                 # If the decision changed, save a new one
                 decision.save()
-                return redirect('/%s/%s/' % (document_slug, version_number))
+                return redirect(
+                           reverse(
+                               'witness.views.document_detail',
+                                kwargs={
+                                    'document_slug' : document_slug,
+                                    'version_number' : version_number
+                                }
+                           )
+                       )
     data = {'document_version': document_version, 
             "latest_decision": latest_decision}
     return render(request, 'witness/document_detail.html', data)
