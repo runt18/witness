@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -37,6 +38,15 @@ class DocumentVersion(models.Model):
 
     def __unicode__(self):
         return "Document: %s Version: %s" % (self.document, self.title)
+
+    def get_absolute_url(self):
+        return reverse(
+                'witness.views.document_detail',
+                kwargs={
+                    'document_slug' : self.document.slug,
+                    'version_number' : self.number
+                }
+            )
 
     class Meta:
         get_latest_by = 'creation_time'
