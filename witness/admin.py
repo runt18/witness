@@ -51,22 +51,24 @@ class DocumentVersionAdmin(admin.ModelAdmin):
     def name(self, obj):
         return str(obj)
 
-    def num_signed(self, obj):
+    def num_signatures(self, obj):
         return Decision.objects.filter(document_version=obj).count()
+    num_signatures.short_description = "Number of Signatures"
 
-    def list_signed(self, obj):
-        return ', '.join(Decision.objects.filter(
-                            document_version=obj
-                        ).distinct(
-                            'email'
-                        ).values_list(
-                            'email',
-                            flat=True
-                        )
-               )
+    def emails_signed(self, obj):
+        return ', '.join(
+                    Decision.objects.filter(
+                        document_version=obj
+                    ).distinct(
+                        'email'
+                    ).values_list(
+                        'email',
+                        flat=True
+                    )
+                )
 
     actions = (clone_and_modify, retire)
-    list_display = ('name', 'num_signed', 'list_signed')
+    list_display = ('name', 'num_signatures', 'emails_signed')
 
     def has_change_permission(self, request, obj=None):
         ''' 
