@@ -8,17 +8,27 @@
     <title>{% block page_title %}{% endblock %} - {{ _('Witness') }}</title>
 
     {% block site_css %}
+      {{ css('witness_css') }}
     {% endblock %}
   </head>
   <body data-mobile-cookie='{{ settings.MOBILE_COOKIE }}'>
-    {% if user.is_authenticated() %}
-        Hello, {{ user.email }}
-        {% if user.is_superuser %}
-            You are the admin
-        {% endif %}
-        <a href="{{ url('auth_logout') }}">Logout</a>
-    {% endif %}
-    <div role='main'>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">{{ _('Witness') }}</a>
+                {% if user.is_authenticated() %}
+                    <div class="pull-right">
+                        {{ user.email }}
+                        {% if user.is_superuser %}
+                            You are the admin
+                        {% endif %}
+                        <a href="{{ url('auth_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="container" role='main'>
       {% block main %}{% endblock %}
     </div>
 

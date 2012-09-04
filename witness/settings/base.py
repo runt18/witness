@@ -17,11 +17,15 @@ PROJECT_MODULE = 'witness'
 # and js files that can be bundled together by the minify app.
 MINIFY_BUNDLES = {
     'css': {
+        'witness_css': (
+            'bootstrap/css/bootstrap.min.css',
+        ),
     },
     'js': {
         'witness_js': (
             'js/witness/libs/jquery-1.7.2.js',
             'browserid/browserid.js',
+            'bootstrap/js/bootstrap.min.js',
         ),
     },
 }
