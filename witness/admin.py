@@ -55,13 +55,14 @@ class DocumentVersionAdmin(admin.ModelAdmin):
         return Decision.objects.filter(document_version=obj).count()
 
     def list_signed(self, obj):
-        return ', '.join(
-                    ["(%s %s)" % (decision.email, decision.document_version)
-                        for decision in 
-                        Decision.objects.filter(
+        return ', '.join(Decision.objects.filter(
                             document_version=obj
+                        ).distinct(
+                            'email'
+                        ).values_list(
+                            'email',
+                            flat=True
                         )
-                    ]
                )
 
     actions = (clone_and_modify, retire)
