@@ -19,7 +19,16 @@ def home(request):
     documents = [document for document in
                  models.Document.objects.all().order_by("title")
                  if document.versions.count() > 0]
-    data = {"documents": documents}
+    my_documents = list(set([decision.document_version.document 
+                    for decision in 
+                    models.Decision.objects.filter(
+                        user=request.user
+                    )]))
+    data = {
+            "documents" : documents,
+            "my_documents" : my_documents
+
+           }
     return render(request, "witness/home.html", data)
 
 @anonymous_csrf
