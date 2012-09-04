@@ -28,6 +28,9 @@ def document_detail(request, document_slug, version_number):
         get_object_or_404(models.DocumentVersion, document__slug=document_slug,
                           number=version_number)
     latest_decision = None
+    latest_version = None
+    if document_version != document_version.document.latest_version:
+        latest_version = document_version.document.latest_version
     if request.user.is_authenticated():
         user = request.user
         decisions = \
@@ -35,6 +38,7 @@ def document_detail(request, document_slug, version_number):
                                            user=user)
         if decisions.count() > 0:
             latest_decision = decisions.latest()
+
         if 'yes' in request.POST or 'no' in request.POST:
             text_hash = hashlib.sha1(document_version.text).hexdigest()
             decision = models.Decision(document_version=document_version,
@@ -58,12 +62,10 @@ def document_detail(request, document_slug, version_number):
                 
                 message = "Here's the document: %s " % request.build_absolute_uri(
                         document_version.get_absolute_url())
-                send_mail(
-                        subject="Your signature",
-                        message=message,
-                        from_email='admin@example.com',
-                        recipient_list=(user.email,),
-                    )
+                send_mail(subject="You signed %s" % (decision),
+                          message=message,
+                          from_email='admin@example.com',
+                          recipient_list=(user.email,),)
 
                 return redirect(
                            reverse(
@@ -76,6 +78,7 @@ def document_detail(request, document_slug, version_number):
                        )
     data = {
             "document_version" : document_version, 
-            "latest_decision" : latest_decision
+            "latest_decision" : latest_decision,
+            "latest_version" : latest_version
         }
     return render(request, 'witness/document_detail.html', data)

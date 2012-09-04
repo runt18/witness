@@ -7,7 +7,17 @@
 {% endblock %}
 
 {% block main %}
-  <h1>{{ document_version.title }}</h1>
+<h1>{{ document_version.title }}</h1>
+{% if document_version.is_retired %}
+<h2>{% trans %}Retired{% endtrans %}</h2>
+{% endif %}
+{% if latest_version %}
+<p>
+{% trans latest_url=latest_version.get_absolute_url() %}
+The latest version is available <a href="{{ latest_url }}">here</a>
+{% endtrans %}
+</p>
+{% endif %}
   <div>{{ document_version.text|markdown }}</div>
   {% if user.is_authenticated() %}
     {% if latest_decision %}
