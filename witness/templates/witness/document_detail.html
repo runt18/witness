@@ -36,12 +36,12 @@ The latest version is available <a href="{{ latest_url }}">here</a>
         <form action='' method='post'>
         {{ csrf() }}
         {% if not latest_decision or not latest_decision.is_agreed %}
-            <button type='submit' name='yes'>
+            <button type='submit' name='yes' class="btn btn-success">
             {{ document_version.yes_action_text }}
             </button>
         {% endif %}
         {% if not latest_decision or latest_decision.is_agreed %}
-            <button type='submit' name='no'>
+            <button type='submit' name='no' class="btn btn-danger">
             {{ document_version.no_action_text }}
             </button>
         {% endif %}
