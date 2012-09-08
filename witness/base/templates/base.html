@@ -15,7 +15,12 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="/">{{ _('Witness') }}</a>
+                <a class="brand" href="{{ url("home") }}">{{ _('Witness') }}</a>
+                <ul class="nav">
+                <li class="">
+                    <a href="{{ url("home") }}">Home</a>
+                </li>
+                </ul>
                 {% if user.is_authenticated() %}
                     <div class="pull-right">
                         {{ user.email }}
