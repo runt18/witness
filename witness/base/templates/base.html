@@ -15,12 +15,12 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="#">{{ _('Witness') }}</a>
+                <a class="brand" href="/">{{ _('Witness') }}</a>
                 {% if user.is_authenticated() %}
                     <div class="pull-right">
                         {{ user.email }}
                         {% if user.is_superuser %}
-                            You are the admin
+                        (<a href="{{ url('admin:index')}}">admin</a>)
                         {% endif %}
                         <a href="{{ url('auth_logout') }}">Logout</a>
                     </div>
