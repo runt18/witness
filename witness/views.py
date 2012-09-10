@@ -35,22 +35,35 @@ def home(request):
 
 @anonymous_csrf
 def document_detail(request, document_slug, version_number):
-    document_version = \
-        get_object_or_404(models.DocumentVersion, document__slug=document_slug,
-                          number=version_number)
+    document_version = get_object_or_404(
+                            models.DocumentVersion, 
+                            document__slug=document_slug,
+                            number=version_number)
+    all_decisions = None
     latest_decision = None
     latest_version = None
+    previous_versions = None
     if document_version != document_version.document.latest_version:
         latest_version = document_version.document.latest_version
     if request.user.is_authenticated():
         user = request.user
-        decisions = \
-            models.Decision.objects.filter(document_version=document_version,
-                                           user=user)
+        decisions = models.Decision.objects.filter(
+                                        document_version=document_version,
+                                        user=user)
         if decisions.count() > 0:
             latest_decision = decisions.latest()
+        
+        if request.user.is_superuser:
+            # Show more info for superuser
+            previous_versions = models.DocumentVersion.objects.filter(
+                                                document=document_version.document
+                                            ).exclude(
+                                                number=version_number
+                                            )
+            all_decisions = models.Decision.objects.filter(document_version=document_version)
 
         if 'yes' in request.POST or 'no' in request.POST:
+            # Process the decision
             text_hash = hashlib.sha1(document_version.text).hexdigest()
             decision = models.Decision(document_version=document_version,
                                        user=user, email=user.email,
@@ -90,6 +103,8 @@ def document_detail(request, document_slug, version_number):
     data = {
             "document_version" : document_version, 
             "latest_decision" : latest_decision,
-            "latest_version" : latest_version
+            "latest_version" : latest_version,
+            "previous_versions" : previous_versions,
+            "all_decisions" : all_decisions,
         }
     return render(request, 'witness/document_detail.html', data)

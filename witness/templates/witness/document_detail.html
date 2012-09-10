@@ -60,4 +60,32 @@ The latest version is available <a href="{{ latest_url }}">here</a>
       {{ browserid_form.as_p() }}
     </form>
   {% endif %}
+  {% if all_decisions %}
+    <h2>{{ _('All the signatures for this document') }}</h2>
+    <ul>
+      {% for decision in all_decisions %}
+        <li>
+            <a href='{{ url('admin:witness_decision_change', decision.id) }}'>
+                {{ decision.user }}
+                - {{ decision.action_text }}
+                @ {{ decision.last_update_time }}
+            </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if previous_versions %}
+    <h2>{{ _('Previous versions of this document') }}</h2>
+    <ul>
+      {% for dv in previous_versions %}
+        <li>
+        <a href='{{ url('document_detail', 
+                        document_slug=dv.document.slug,
+                        version_number=dv.document.latest_version.number) }}'>
+            {{ dv.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}
