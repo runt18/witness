@@ -66,7 +66,7 @@ The latest version is available <a href="{{ latest_url }}">here</a>
       {% for decision in all_decisions %}
         <li>
             <a href='{{ url('admin:witness_decision_change', decision.id) }}'>
-                {{ decision.user }}
+                {{ decision.user.email }}
                 - {{ decision.action_text }}
                 @ {{ decision.last_update_time }}
             </a>
