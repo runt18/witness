@@ -21,11 +21,12 @@ def home(request):
                  if document.versions.count() > 0]
     my_documents = None
     if request.user.is_authenticated():
-        my_documents = list(set([decision.document_version.document 
-                        for decision in 
-                        models.Decision.objects.filter(
-                            user=request.user
-                        )]))
+        my_documents = [document for document in documents
+                            if document.id in 
+                            models.Decision.objects.filter(
+                                user=request.user
+                            ).values_list('document_version__document', flat=True)
+                        ]
     data = {
             "documents" : documents,
             "my_documents" : my_documents
