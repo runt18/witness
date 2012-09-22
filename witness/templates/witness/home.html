@@ -6,7 +6,7 @@
   {{ _('Home') }}
 {% endblock %}
 {% block main %}
-  <h1>{{ _('Home') }}</h1>
+  <h1>{{ _('Witness') }}</h1>
   {% if not user.is_authenticated() %}
     <p>
       <a id='browserid' href='#'>{{ _('Log in') }}</a>
@@ -17,7 +17,7 @@
     </form>
   {% endif %}
   {% if documents %}
-    <h2>{{ _('All documents') }}</h2>
+    <h2>{{ _('All Documents') }}</h2>
     <ul>
       {% for document in documents %}
         <li>
@@ -34,7 +34,7 @@
     {% endif %}
   {% endif %}
   {% if my_documents %}
-    <h2>{{ _('Documents that I have signed') }}</h2>
+    <h2>{{ _('My Signed Documents') }}</h2>
     <ul>
     {% for document in my_documents %}
         <li>

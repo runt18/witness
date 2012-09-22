@@ -50,7 +50,7 @@ The latest version is available <a href="{{ latest_url }}">here</a>
   {% else %}
     <p>
       <a id='browserid' href='#'>
-        {{ _('Log in to sign this document.') }}
+        {{ _('Log in to Sign this Document.') }}
       </a>
     </p>
     <form action='{{ url('browserid_verify') }}' method='post'>
@@ -61,7 +61,7 @@ The latest version is available <a href="{{ latest_url }}">here</a>
     </form>
   {% endif %}
   {% if all_decisions %}
-    <h2>{{ _('All the signatures for this document') }}</h2>
+    <h2>{{ _('All the Signatures for this Document') }}</h2>
     <ul>
       {% for decision in all_decisions %}
         <li>
@@ -75,7 +75,7 @@ The latest version is available <a href="{{ latest_url }}">here</a>
     </ul>
   {% endif %}
   {% if previous_versions %}
-    <h2>{{ _('Previous versions of this document') }}</h2>
+    <h2>{{ _('Previous Versions of this Document') }}</h2>
     <ul>
       {% for dv in previous_versions %}
         <li>
