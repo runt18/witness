@@ -19,6 +19,19 @@
       {{ browserid_form.as_p() }}
     </form>
   {% endif %}
+  {% if my_documents %}
+    <h2>{{ _('My Signed Documents') }}</h2>
+    <ul>
+    {% for document in my_documents %}
+        <li>
+          <a href='{{ url('document_detail', document_slug=document.slug,
+                          version_number=document.latest_version.number) }}'>
+            {{ document.latest_version.title }}
+          </a>
+        </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
   {% if documents %}
     <h2>{{ _('All Documents') }}</h2>
     <ul>
@@ -35,18 +48,5 @@
     {% if not user.is_authenticated() %}
       <p>{{ _('There are not any documents here.') }}</p>
     {% endif %}
-  {% endif %}
-  {% if my_documents %}
-    <h2>{{ _('My Signed Documents') }}</h2>
-    <ul>
-    {% for document in my_documents %}
-        <li>
-          <a href='{{ url('document_detail', document_slug=document.slug,
-                          version_number=document.latest_version.number) }}'>
-            {{ document.latest_version.title }}
-          </a>
-        </li>
-    {% endfor %}
-</ul>
   {% endif %}
 {% endblock %}
