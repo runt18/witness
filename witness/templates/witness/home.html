@@ -7,6 +7,9 @@
 {% endblock %}
 {% block main %}
   <h1>{{ _('Witness') }}</h1>
+  <p>
+    {{ _('Witness is an application for verifiable signing of documents') }}
+  </p>
   {% if not user.is_authenticated() %}
     <p>
       <a id='browserid' href='#'>{{ _('Log in') }}</a>
