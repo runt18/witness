@@ -8,38 +8,43 @@
     <title>{% block page_title %}{% endblock %} - {{ _('Witness') }}</title>
 
     {% block site_css %}
-      {{ css('witness_css') }}
+    {{ css('witness_css') }}
     {% endblock %}
-  </head>
-  <body data-mobile-cookie='{{ settings.MOBILE_COOKIE }}'>
-    <div class="navbar">
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+</head>
+<body data-mobile-cookie='{{ settings.MOBILE_COOKIE }}'>
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
                 <a class="brand" href="{{ url("home") }}">{{ _('Witness') }}</a>
                 <ul class="nav">
-                <li class="">
+                    <li class="">
                     <a href="{{ url("home") }}">Home</a>
-                </li>
+                    </li>
                 </ul>
                 {% if user.is_authenticated() %}
-                    <div class="pull-right">
-                        {{ user.email }}
-                        {% if user.is_superuser %}
-                        (<a href="{{ url('admin:index')}}">admin</a>)
-                        {% endif %}
-                        <a href="{{ url('auth_logout') }}">Logout</a>
-                    </div>
+                <div class="pull-right">
+                    {{ user.email }}
+                    {% if user.is_superuser %}
+                    (<a href="{{ url('admin:index')}}">admin</a>)
+                    {% endif %}
+                    <a href="{{ url('auth_logout') }}">Logout</a>
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
     <div class="container" role='main'>
-      {% block main %}{% endblock %}
+        {% block main %}{% endblock %}
     </div>
 
     {% block site_js %}
-      <script src='https://browserid.org/include.js'></script>
-      {{ js('witness_js') }}
+    <script src='https://browserid.org/include.js'></script>
+    {{ js('witness_js') }}
     {% endblock %}
-  </body>
+</body>
 </html>
