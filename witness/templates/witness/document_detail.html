@@ -7,6 +7,9 @@
 {% endblock %}
 
 {% block main %}
+<style>
+    .document-text { padding: 10px; border: 2px solid #eee; }
+</style>
 <h1>{{ document_version.title }}</h1>
 {% if document_version.is_retired %}
 <div class="alert">{{ _('Retired') }}</div>
@@ -18,7 +21,7 @@ The latest version is available <a href="{{ latest_url }}">here</a>
 {% endtrans %}
 </p>
 {% endif %}
-  <div>{{ document_version.text|markdown }}</div>
+  <div class="document-text">{{ document_version.text|markdown }}</div>
   {% if user.is_authenticated() %}
     {% if latest_decision %}
       <p>
