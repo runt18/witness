@@ -65,17 +65,32 @@ The latest version is available <a href="{{ latest_url }}">here</a>
   {% endif %}
   {% if all_decisions %}
     <h2>{{ _('All the Signatures for this Document') }}</h2>
-    <ul>
+    <table class="table">
+      <tr>
+          <td>Email</td>
+          <td>Response</td>
+          <td>Date</td>
+      </tr>
       {% for decision in all_decisions %}
-        <li>
+        <tr class="{% if decision.is_agreed %}success{% else %}error{% endif %}">
+          <td>
             <a href='{{ url('admin:witness_decision_change', decision.id) }}'>
                 {{ decision.user.email }}
-                - {{ decision.action_text }}
-                @ {{ decision.last_update_time }}
             </a>
-        </li>
+          </td>
+          <td>
+            <a href='{{ url('admin:witness_decision_change', decision.id) }}'>
+                {{ decision.action_text }}
+            </a>
+          </td>
+          <td>
+            <a href='{{ url('admin:witness_decision_change', decision.id) }}'>
+                {{ decision.last_update_time }}
+            </a>
+          </td>
+        </tr>
       {% endfor %}
-    </ul>
+    </table>
   {% endif %}
   {% if previous_versions %}
     <h2>{{ _('Previous Versions of this Document') }}</h2>
