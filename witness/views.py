@@ -19,18 +19,17 @@ def home(request):
     documents = [document for document in
                  models.Document.objects.all().order_by("title")
                  if document.versions.count() > 0]
-    my_documents = None
+    my_responses = None
     if request.user.is_authenticated():
-        my_documents = [document for document in documents
-                            if document.id in 
-                            models.Decision.objects.filter(
-                                user=request.user
-                            ).values_list('document_version__document', flat=True)
-                        ]
+        my_dvs = models.DocumentVersion.objects.filter(
+                        decisions__user=request.user
+                    ).distinct()
+        my_responses = [dv.decisions.latest() for dv in my_dvs]
+
+    print my_responses
     data = {
             "documents" : documents,
-            "my_documents" : my_documents
-
+            "my_responses" : my_responses
            }
     return render(request, "witness/home.html", data)
 

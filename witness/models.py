@@ -17,6 +17,11 @@ class Document(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_latest_version_for_user(self, user):
+        try:
+            return self.versions.filter(decisions__user=user).latest()
+        except DocumentVersion.DoesNotExist:
+            return None
     @property
     def latest_version(self):
         try:
@@ -32,8 +37,8 @@ class DocumentVersion(models.Model):
     title = models.CharField(max_length=128,
                              verbose_name=_('full title of this version'))
     text = models.TextField(verbose_name=_('document text'))
-    yes_action_text = models.CharField(max_length=64, default="I agree")
-    no_action_text = models.CharField(max_length=64, default="I disagree")
+    yes_action_text = models.CharField(max_length=64, default=_("I agree"))
+    no_action_text = models.CharField(max_length=64, default=_("I disagree"))
     is_retired = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -56,6 +61,7 @@ class Decision(models.Model):
     last_update_time = models.DateTimeField(auto_now=True)
     # Prevent deletion of the referenced object
     document_version = models.ForeignKey(DocumentVersion,
+                                         related_name="decisions",
                                          on_delete=models.PROTECT)
     user = models.ForeignKey(auth_models.User)
     email = models.EmailField(verbose_name=_("user's email address"))
@@ -74,3 +80,5 @@ class Decision(models.Model):
 
     class Meta:
         get_latest_by = 'creation_time'
+        ordering = ['-creation_time']
+        
