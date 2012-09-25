@@ -3,14 +3,14 @@
  # You can obtain one at http://mozilla.org/MPL/2.0/. #}
 {% extends 'base.html' %}
 {% block page_title %}
-  {{ document_version.title }}
+{{ document_version.title }} ({{ document_version.number }})
 {% endblock %}
 
 {% block main %}
 <style>
     .document-text { padding: 10px; border: 2px solid #eee; }
 </style>
-<h1>{{ document_version.title }}</h1>
+<h1>{{ document_version.title }} ({{ document_version.number }})</h1>
 {% if document_version.is_retired %}
 <div class="alert">{{ _('Retired') }}</div>
 {% endif %}
