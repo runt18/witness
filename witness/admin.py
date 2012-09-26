@@ -72,15 +72,15 @@ class DocumentVersionAdmin(admin.ModelAdmin):
                 "Successfully retired %s document version(s)" % 
                     queryset.count()
             )
-    def name(self, obj):
-        return str(obj)
+    def document_title(self, obj):
+        return str(obj.document.title)
 
     def num_signatures(self, obj):
         return Decision.objects.filter(document_version=obj).count()
     num_signatures.short_description = "Number of Signatures"
 
     actions = (clone_and_modify, retire)
-    list_display = ('name', 'num_signatures')
+    list_display = ('title', 'number', 'document_title', 'num_signatures')
 
     def has_change_permission(self, request, obj=None):
         ''' 

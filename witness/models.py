@@ -39,7 +39,8 @@ class DocumentVersion(models.Model):
     number = models.CharField(max_length=64, verbose_name=_('version number'))
     title = models.CharField(max_length=128,
                              verbose_name=_('full title of this version'))
-    text = models.TextField(verbose_name=_('document text'))
+    text = models.TextField(verbose_name=_('document text'),
+                            help_text="Supports text and Markdown syntax")
     yes_action_text = models.CharField(max_length=64, default=_("I agree"))
     no_action_text = models.CharField(max_length=64, default=_("I disagree"))
     is_retired = models.BooleanField(default=False)
