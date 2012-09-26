@@ -11,7 +11,9 @@ from witness.models import Document, DocumentVersion, Decision
 # Globally disable delete selected
 admin.site.disable_action('delete_selected')
 
+class DocumentAdmin(admin.ModelAdmin):
 
+    list_display = ('title', 'latest_version')
 
 class DocumentVersionAdmin(admin.ModelAdmin):
     def clone_and_modify(self, request, queryset):
@@ -86,6 +88,6 @@ class DecisionAdmin(admin.ModelAdmin):
         return False
     
 
-admin.site.register(Document)
+admin.site.register(Document, DocumentAdmin)
 admin.site.register(DocumentVersion, DocumentVersionAdmin)
 admin.site.register(Decision, DecisionAdmin)

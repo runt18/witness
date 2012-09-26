@@ -45,7 +45,7 @@ class DocumentVersion(models.Model):
     is_retired = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return "Document: %s Version: %s" % (self.document, self.title)
+        return "%s - %s" % (self.document, self.title)
 
     def get_absolute_url(self):
         return reverse(
