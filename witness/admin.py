@@ -79,20 +79,8 @@ class DocumentVersionAdmin(admin.ModelAdmin):
         return Decision.objects.filter(document_version=obj).count()
     num_signatures.short_description = "Number of Signatures"
 
-    def emails_signed(self, obj):
-        return ', '.join(
-                    Decision.objects.filter(
-                        document_version=obj
-                    ).distinct(
-                        'email'
-                    ).values_list(
-                        'email',
-                        flat=True
-                    )
-                )
-
     actions = (clone_and_modify, retire)
-    list_display = ('name', 'num_signatures', 'emails_signed')
+    list_display = ('name', 'num_signatures')
 
     def has_change_permission(self, request, obj=None):
         ''' 
