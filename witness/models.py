@@ -17,6 +17,9 @@ class Document(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "1. Document"
+
     def get_latest_version_for_user(self, user):
         try:
             return self.versions.filter(decisions__user=user).latest()
@@ -54,6 +57,7 @@ class DocumentVersion(models.Model):
             )
 
     class Meta:
+        verbose_name = "2. Document Version"
         get_latest_by = 'creation_time'
 
 class Decision(models.Model):
@@ -79,6 +83,7 @@ class Decision(models.Model):
         return "%s %s" % (self.document_version.title, self.action_text)
 
     class Meta:
+        verbose_name = "3. Decision"
         get_latest_by = 'creation_time'
         ordering = ['-creation_time']
         

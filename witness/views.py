@@ -65,8 +65,8 @@ def document_detail(request, document_slug, version_number):
                     ).values_list('user', flat=True)))
             all_decisions = [models.Decision.objects.filter(
                                 document_version=document_version,
-                                user=user).latest()
-                             for user in all_users]
+                                user=u).latest()
+                             for u in all_users]
 
         if 'yes' in request.POST or 'no' in request.POST:
             # Process the decision
