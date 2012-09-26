@@ -22,7 +22,7 @@ class DocumentAdmin(admin.ModelAdmin):
         except Document.MultipleObjectsReturned:
             ''' Multiple documents are checked '''
             self.message_user(
-                    request, 
+                    request,
                     "Only one document can be selected"
                 )
 
@@ -39,7 +39,7 @@ class DocumentAdmin(admin.ModelAdmin):
 
 class DocumentVersionAdmin(admin.ModelAdmin):
     def clone_and_modify(self, request, queryset):
-        ''' 
+        '''
         Clone an existing document version, and redirect to the change page
         '''
         try:
@@ -61,15 +61,15 @@ class DocumentVersionAdmin(admin.ModelAdmin):
         except DocumentVersion.MultipleObjectsReturned:
             ''' Multiple versions are checked '''
             self.message_user(
-                    request, 
+                    request,
                     "Only one document version can be selected"
                 )
 
     def retire(self, request, queryset):
         queryset.update(is_retired=True)
         self.message_user(
-                request, 
-                "Successfully retired %s document version(s)" % 
+                request,
+                "Successfully retired %s document version(s)" %
                     queryset.count()
             )
     def document_title(self, obj):
@@ -83,7 +83,7 @@ class DocumentVersionAdmin(admin.ModelAdmin):
     list_display = ('title', 'number', 'document_title', 'num_signatures')
 
     def has_change_permission(self, request, obj=None):
-        ''' 
+        '''
         If a document version has been signed,
         no one can edit it
         '''
@@ -93,10 +93,24 @@ class DecisionAdmin(admin.ModelAdmin):
     ''' Prevent admins from manually tampering with the decision '''
     readonly_fields = Decision._meta.get_all_field_names()
 
-    def has_delete_permission(self, request, obj=None):
-        ''' Disable delete '''
+    def has_add_permission(self, request):
         return False
-    
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def document(self, obj):
+        return obj.document_version.document.title
+    def document_version(self, obj):
+        return obj.document_version.title
+
+    list_display = (
+            'document',
+            'document_version',
+            'email',
+            'action_text',
+            'creation_time')
+
 
 admin.site.register(Document, DocumentAdmin)
 admin.site.register(DocumentVersion, DocumentVersionAdmin)
