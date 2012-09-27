@@ -110,6 +110,7 @@ class DecisionAdmin(admin.ModelAdmin):
             'email',
             'action_text',
             'creation_time')
+    change_form_template = 'witness_admin/decision_change_form.html'
 
 
 admin.site.register(Document, DocumentAdmin)

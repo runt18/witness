@@ -54,6 +54,7 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
 JINGO_EXCLUDE_APPS = [
     'admin',
     'registration',
+    'witness_admin',
 ]
 
 # Tells the extract script what files to look for L10n in and what function
