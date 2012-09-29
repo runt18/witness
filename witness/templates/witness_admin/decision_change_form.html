@@ -1,6 +1,6 @@
 {% extends "admin/change_form.html" %}
-{% block extrahead %}
-{# FIXME hack for hiding the submit-row for decisions #}
+{% block extrastyle %}
+{{ block.super }}
 <style>
     .submit-row {display:none;}
 </style>

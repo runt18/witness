@@ -12,7 +12,7 @@ from witness.models import Document, DocumentVersion, Decision
 admin.site.disable_action('delete_selected')
 
 class DocumentAdmin(admin.ModelAdmin):
-    def view(self, request, queryset):
+    def view_latest_version(self, request, queryset):
         ''' View the latest version of a document '''
         try:
             document = queryset.get()
@@ -28,13 +28,22 @@ class DocumentAdmin(admin.ModelAdmin):
 
     def add_new_version(self, request, queryset):
         ''' Add a new version for a document '''
-        return redirect(
-                urlresolvers.reverse(
-                    'admin:witness_documentversion_add',
-                    )
+        try:
+            document = queryset.get()
+            return redirect( "%s?document=%s" % (
+                    urlresolvers.reverse('admin:witness_documentversion_add'),
+                    document.id)
+                   )
+        except Document.MultipleObjectsReturned:
+            ''' Multiple documents are checked '''
+            self.message_user(
+                    request,
+                    "Only one document can be selected"
                 )
 
-    actions = (view, add_new_version)
+    change_form_template = 'witness_admin/document_change_form.html'
+
+    actions = (view_latest_version, add_new_version)
     list_display = ('title', 'latest_version')
 
 class DocumentVersionAdmin(admin.ModelAdmin):
