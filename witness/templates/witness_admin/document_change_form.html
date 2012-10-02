@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% block after_related_objects %}
+<div class="submit-row">
+    <input value="View Latest" 
+        onclick="window.location.href='{{ original.latest_version.get_absolute_url }}'" />
+    <input value="Add New Version" 
+        onclick="window.location.href='{% url admin:witness_documentversion_add %}?document={{ original.id }}'" />
+</div>
+{% endblock %}

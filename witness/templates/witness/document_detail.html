@@ -38,6 +38,11 @@ The latest version is available <a href="{{ latest_url }}">here</a>
         </p>
         <form action='' method='post'>
         {{ csrf() }}
+        {% if document_version.require_address %}
+            <p><b>{{ _('The document owner requires your address:') }}</b></p>
+            <input type="text" name="address" placeholder="1 Anystreet Anytown, CA" />
+            <br/>
+        {% endif %}
         {% if not latest_decision or not latest_decision.is_agreed %}
             <button type='submit' name='yes' class="btn btn-success">
             {{ document_version.yes_action_text }}

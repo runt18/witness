@@ -85,6 +85,8 @@ def document_detail(request, document_slug, version_number):
                     return HttpResponse(status=400)
                 decision.action_text = document_version.no_action_text
                 decision.is_agreed = False
+            if 'address' in request.POST:
+                decision.address = request.POST.get('address')
             if (not latest_decision or
                 not (latest_decision.is_agreed and decision.is_agreed)):
                 # If the decision changed, save a new one
