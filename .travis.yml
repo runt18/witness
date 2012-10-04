@@ -5,7 +5,6 @@ python:
 install: "pip install -r requirements/dev.txt --use-mirrors"
 # command to run tests
 before_script:
-  - mysql -e 'create database test_witness;'
   - cp witness/settings/local.py-dist witness/settings/local.py
 script: FORCE_DB=1 python manage.py test
 
