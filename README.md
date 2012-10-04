@@ -7,3 +7,5 @@ To bootstrap the virtualenv for development, run ./bootstrap-env.sh
 
 The MySQL database is called 'witness'. Create it manually, then run
 syncdb.
+
+[![Build Status](https://travis-ci.org/khchen428/witness.png)]( https://travis-ci.org/khchen428/witness)
