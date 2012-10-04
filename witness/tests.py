@@ -43,6 +43,22 @@ class WitnessTestHelper(object):
         defaults.update(kwargs)
         return DocumentVersion.objects.create(**defaults)
 
+    def create_documentversion_with_require_address(self, **kwargs):
+        self.slug_counter = getattr(self, 'slug_counter', 0) + 1
+        defaults = {
+            'number': 'v-%d' % self.slug_counter,
+            'title': 'Test Version %d' % self.slug_counter,
+            'text': 'Lorem ipsum dolor.',
+            'yes_action_text': 'Yes',
+            'no_action_text': 'No',
+            'is_retired': False,
+            'require_address': True,
+        }
+        if 'document' not in kwargs:
+            defaults['document'] = self.create_document()
+        defaults.update(kwargs)
+        return DocumentVersion.objects.create(**defaults)
+
     def create_decision(self, **kwargs):
         self.slug_counter = getattr(self, 'slug_counter', 0) + 1
         defaults = {
@@ -109,6 +125,15 @@ class ModelTests(WitnessTestHelper, test_utils.TestCase):
         after = datetime.datetime.now()
         self.assertTrue(version.creation_time >= before)
         self.assertTrue(version.creation_time <= after)
+        self.assertFalse(version.require_address)
+
+    def test_create_documentversion_with_require_address(self):
+        before = datetime.datetime.now()
+        version = self.create_documentversion_with_require_address()
+        after = datetime.datetime.now()
+        self.assertTrue(version.creation_time >= before)
+        self.assertTrue(version.creation_time <= after)
+        self.assertTrue(version.require_address)
 
     def test_create_decision(self):
         before = datetime.datetime.now()

@@ -82,6 +82,7 @@ class Decision(models.Model):
     is_agreed = models.BooleanField()
     address = models.CharField(max_length=64,
                                 verbose_name=_('physical address of the signee'),
+                                null=True,
                                 default=None
                                 )
 
