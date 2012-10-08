@@ -9,6 +9,7 @@
 {% block main %}
 <style>
     .document-text { padding: 10px; border: 2px solid #eee; }
+    .choice-box { border: 1px solid #eee;}
 </style>
 <h1>{{ document_version.title }} ({{ document_version.number }})</h1>
 {% if document_version.is_retired %}
@@ -17,7 +18,7 @@
 {% if latest_version %}
 <p>
 {% trans latest_url=latest_version.get_absolute_url() %}
-The latest version is available <a href="{{ latest_url }}">here</a>
+This is not the most recent version of this document. You can <a href="{{ latest_url }}">go to the most recent version</a>
 {% endtrans %}
 </p>
 {% endif %}
@@ -38,20 +39,23 @@ The latest version is available <a href="{{ latest_url }}">here</a>
         </p>
         <form action='' method='post'>
         {{ csrf() }}
-        {% if document_version.require_address %}
-            <p><b>{{ _('The document owner requires your address:') }}</b></p>
-            <input type="text" name="address" placeholder="1 Anystreet Anytown, CA" />
-            <br/>
-        {% endif %}
         {% if not latest_decision or not latest_decision.is_agreed %}
+        <div class="choice-box">
             <button type='submit' name='yes' class="btn btn-success">
             {{ document_version.yes_action_text }}
             </button>
+            {% if document_version.require_address %}
+                <b>{{ _('The document owner requires your address:') }}</b>
+                <input type="text" name="address" placeholder="1 Anystreet Anytown, CA" />
+            {% endif %}
+        </div>
         {% endif %}
         {% if not latest_decision or latest_decision.is_agreed %}
+        <div class="choice-box">
             <button type='submit' name='no' class="btn btn-danger">
             {{ document_version.no_action_text }}
             </button>
+        </div>
         {% endif %}
         </form>
     {% endif %}
