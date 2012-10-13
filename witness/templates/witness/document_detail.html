@@ -40,22 +40,21 @@ This is not the most recent version of this document. You can <a href="{{ latest
         <form action='' method='post'>
         {{ csrf() }}
         {% if not latest_decision or not latest_decision.is_agreed %}
-        <div class="choice-box">
-            <button type='submit' name='yes' class="btn btn-success">
+        <button type='submit' name='yes' class="btn btn-success">
             {{ document_version.yes_action_text }}
-            </button>
-            {% if document_version.require_address %}
-                <b>{{ _('The document owner requires your address:') }}</b>
-                <input type="text" name="address" placeholder="1 Anystreet Anytown, CA" />
-            {% endif %}
-        </div>
+        </button>
         {% endif %}
         {% if not latest_decision or latest_decision.is_agreed %}
-        <div class="choice-box">
-            <button type='submit' name='no' class="btn btn-danger">
+        <button type='submit' name='no' class="btn btn-danger">
             {{ document_version.no_action_text }}
-            </button>
-        </div>
+        </button>
+        {% endif %}
+        {% if document_version.require_address %}
+        <br/><br/>
+        <b>{{ _('If you agree, please provide the following information:') }}</b>
+        <p>
+            <input type="text" name="address" placeholder="1 Anystreet Anytown, CA" />
+        </p>
         {% endif %}
         </form>
     {% endif %}
