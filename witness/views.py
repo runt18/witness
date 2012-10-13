@@ -36,7 +36,7 @@ def home(request):
 @anonymous_csrf
 def document_detail(request, document_slug, version_number):
     document_version = get_object_or_404(
-                            models.DocumentVersion, 
+                            models.DocumentVersion,
                             document__slug=document_slug,
                             number=version_number)
     all_decisions = None
@@ -52,7 +52,7 @@ def document_detail(request, document_slug, version_number):
                                         user=user)
         if decisions.count() > 0:
             latest_decision = decisions.latest()
-        
+
         if request.user.is_superuser:
             # Show more info for superuser
             previous_versions = models.DocumentVersion.objects.filter(
@@ -91,7 +91,7 @@ def document_detail(request, document_slug, version_number):
                 not (latest_decision.is_agreed and decision.is_agreed)):
                 # If the decision changed, save a new one
                 decision.save()
-                
+
                 message = "Here's the document: %s " % request.build_absolute_uri(
                         document_version.get_absolute_url())
                 send_mail(subject="You signed %s" % (decision),
@@ -109,7 +109,7 @@ def document_detail(request, document_slug, version_number):
                            )
                        )
     data = {
-            "document_version" : document_version, 
+            "document_version" : document_version,
             "latest_decision" : latest_decision,
             "latest_version" : latest_version,
             "previous_versions" : previous_versions,

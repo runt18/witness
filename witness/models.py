@@ -44,6 +44,7 @@ class DocumentVersion(models.Model):
     yes_action_text = models.CharField(max_length=64, default=_("I agree"))
     no_action_text = models.CharField(max_length=64, default=_("I disagree"))
     is_retired = models.BooleanField(default=False)
+    require_name = models.BooleanField(default=False)
     require_address = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -80,11 +81,16 @@ class Decision(models.Model):
     action_text = models.CharField(max_length=64,
                                    verbose_name=_('text of chosen action'))
     is_agreed = models.BooleanField()
-    address = models.CharField(max_length=64,
-                                verbose_name=_('physical address of the signee'),
-                                null=True,
-                                default=None
-                                )
+    name = models.CharField(
+                max_length=255,
+                verbose_name=_('Full name of the signee'),
+                null=True,
+                default=None)
+    address = models.CharField(
+                max_length=255,
+                verbose_name=_('Physical address of the signee'),
+                null=True,
+                default=None)
 
     def __unicode__(self):
         return "%s %s" % (self.document_version.title, self.action_text)
@@ -93,4 +99,4 @@ class Decision(models.Model):
         verbose_name = "3. Decision"
         get_latest_by = 'creation_time'
         ordering = ['-creation_time']
-        
+
