@@ -89,7 +89,8 @@ class DocumentVersionAdmin(admin.ModelAdmin):
     num_signatures.short_description = "Number of Signatures"
 
     actions = (clone_and_modify, retire)
-    list_display = ('title', 'number', 'document_title', 'num_signatures')
+    list_display = ('title', 'number', 'document_title', 'num_signatures',
+                    'require_name', 'require_address')
 
     def has_change_permission(self, request, obj=None):
         '''
@@ -117,6 +118,7 @@ class DecisionAdmin(admin.ModelAdmin):
             'document',
             'document_version',
             'email',
+            'is_agreed',
             'action_text',
             'creation_time')
     change_form_template = 'witness_admin/decision_change_form.html'

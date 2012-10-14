@@ -8,10 +8,9 @@
 
 {% block main %}
 <style>
-    .document-text { padding: 10px; border: 2px solid #eee; }
-    .choice-box { border: 1px solid #eee;}
+    .errorlist { color: #f00; }
 </style>
-<h1>{{ document_version.title }} ({{ document_version.number }})</h1>
+<h1>{{ document_version.title }} (v.{{ document_version.number }})</h1>
 {% if document_version.is_retired %}
 <div class="alert">{{ _('Retired') }}</div>
 {% endif %}
@@ -22,7 +21,8 @@ This is not the most recent version of this document. You can <a href="{{ latest
 {% endtrans %}
 </p>
 {% endif %}
-  <div class="document-text">{{ document_version.text|markdown }}</div>
+  {{ _("Here's the document:") }}<br/>
+  <pre>{{ document_version.text|markdown }}</pre>
   {% if user.is_authenticated() %}
     {% if latest_decision %}
       <p>
@@ -34,29 +34,15 @@ This is not the most recent version of this document. You can <a href="{{ latest
     {% endif %}
     {% if not document_version.is_retired %}
         <p>
-        {{ _('You are:') }}
-        {{ user.email }}
+        {{ _('You are:') }} {{ user.email }}.
         </p>
-        <form action='' method='post'>
-        {{ csrf() }}
-        {% if not latest_decision or not latest_decision.is_agreed %}
-        <button type='submit' name='yes' class="btn btn-success">
-            {{ document_version.yes_action_text }}
-        </button>
-        {% endif %}
-        {% if not latest_decision or latest_decision.is_agreed %}
-        <button type='submit' name='no' class="btn btn-danger">
-            {{ document_version.no_action_text }}
-        </button>
-        {% endif %}
-        {% if document_version.require_address %}
-        <br/><br/>
-        <b>{{ _('If you agree, please provide the following information:') }}</b>
-        <p>
-            <input type="text" name="address" placeholder="1 Anystreet Anytown, CA" />
-        </p>
-        {% endif %}
+        {% if form %}
+        <form method='post'>
+            {{ csrf() }}
+            {{ form.as_p() }}
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        {% endif %}
     {% endif %}
   {% else %}
     <p>
@@ -105,7 +91,7 @@ This is not the most recent version of this document. You can <a href="{{ latest
     <ul>
       {% for dv in previous_versions %}
         <li>
-        <a href='{{ url('document_detail', 
+        <a href='{{ url('document_detail',
                         document_slug=dv.document.slug,
                         version_number=dv.document.latest_version.number) }}'>
             {{ dv.title }}

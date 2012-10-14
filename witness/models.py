@@ -71,9 +71,9 @@ class Decision(models.Model):
                                          related_name="decisions",
                                          on_delete=models.PROTECT)
     user = models.ForeignKey(auth_models.User)
-    email = models.EmailField(verbose_name=_("user's email address"))
+    email = models.EmailField(verbose_name=_("Email address"))
     full_name = models.CharField(max_length=128,
-                                 verbose_name=_("user's full name"),
+                                 verbose_name=_("Full name"),
                                  blank=True)
     ip_address = models.CharField(max_length=64, verbose_name=_('IP address'))
     text_hash = models.CharField(max_length=128,
@@ -81,14 +81,9 @@ class Decision(models.Model):
     action_text = models.CharField(max_length=64,
                                    verbose_name=_('text of chosen action'))
     is_agreed = models.BooleanField()
-    name = models.CharField(
-                max_length=255,
-                verbose_name=_('Full name of the signee'),
-                null=True,
-                default=None)
     address = models.CharField(
                 max_length=255,
-                verbose_name=_('Physical address of the signee'),
+                verbose_name=_('Address'),
                 null=True,
                 default=None)
 

@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 from session_csrf import anonymous_csrf
 
-from witness import models
+from witness import models, forms
 
 @anonymous_csrf
 def home(request):
@@ -43,6 +43,7 @@ def document_detail(request, document_slug, version_number):
     latest_decision = None
     latest_version = None
     previous_versions = None
+    form = None
     if document_version != document_version.document.latest_version:
         latest_version = document_version.document.latest_version
     if request.user.is_authenticated():
@@ -68,28 +69,26 @@ def document_detail(request, document_slug, version_number):
                                 user=u).latest()
                              for u in all_users]
 
-        if 'yes' in request.POST or 'no' in request.POST:
-            # Process the decision
-            text_hash = hashlib.sha1(document_version.text).hexdigest()
-            decision = models.Decision(document_version=document_version,
-                                       user=user, email=user.email,
-                                       full_name=user.get_full_name(),
-                                       ip_address=request.META["REMOTE_ADDR"],
-                                       text_hash=text_hash)
-            if 'yes' in request.POST:
-                decision.action_text = document_version.yes_action_text
-                decision.is_agreed = True
-            if 'no' in request.POST:
-                if 'yes' in request.POST:
-                    # How can a decision be both yes and no?  Error
-                    return HttpResponse(status=400)
-                decision.action_text = document_version.no_action_text
-                decision.is_agreed = False
-            if 'address' in request.POST:
-                decision.address = request.POST.get('address')
-            if (not latest_decision or
-                not (latest_decision.is_agreed and decision.is_agreed)):
+        text_hash = hashlib.sha1(document_version.text).hexdigest()
+        decision = models.Decision(document_version=document_version,
+                                    user=user,
+                                    email=user.email,
+                                    full_name=user.get_full_name(),
+                                    ip_address=request.META["REMOTE_ADDR"],
+                                    text_hash=text_hash)
+        if request.method == 'GET':
+            form = forms.DecisionForm(instance=decision)
+        elif request.method == 'POST':
+            form = forms.DecisionForm(request.POST, instance=decision)
+
+            if form.is_valid() and\
+               (not latest_decision or
+                not (latest_decision.is_agreed and form.instance.is_agreed)):
                 # If the decision changed, save a new one
+                decision = form.save(commit=False)
+                decision.action_text = document_version.yes_action_text\
+                                if decision.is_agreed\
+                                else document_version.no_action_text
                 decision.save()
 
                 message = "Here's the document: %s " % request.build_absolute_uri(
@@ -114,5 +113,6 @@ def document_detail(request, document_slug, version_number):
             "latest_version" : latest_version,
             "previous_versions" : previous_versions,
             "all_decisions" : all_decisions,
+            "form" : form
         }
     return render(request, 'witness/document_detail.html', data)
