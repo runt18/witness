@@ -11,7 +11,7 @@ from funfactory.urlresolvers import get_url_prefix, Prefixer, reverse, set_url_p
 from tower import activate
 
 from witness.models import Document, DocumentVersion, Decision
-
+from witness.forms import DecisionForm
 
 class WitnessTestHelper(object):
     """
@@ -37,22 +37,6 @@ class WitnessTestHelper(object):
             'yes_action_text': 'Yes',
             'no_action_text': 'No',
             'is_retired': False,
-        }
-        if 'document' not in kwargs:
-            defaults['document'] = self.create_document()
-        defaults.update(kwargs)
-        return DocumentVersion.objects.create(**defaults)
-
-    def create_documentversion_with_require_address(self, **kwargs):
-        self.slug_counter = getattr(self, 'slug_counter', 0) + 1
-        defaults = {
-            'number': 'v-%d' % self.slug_counter,
-            'title': 'Test Version %d' % self.slug_counter,
-            'text': 'Lorem ipsum dolor.',
-            'yes_action_text': 'Yes',
-            'no_action_text': 'No',
-            'is_retired': False,
-            'require_address': True,
         }
         if 'document' not in kwargs:
             defaults['document'] = self.create_document()
@@ -129,7 +113,7 @@ class ModelTests(WitnessTestHelper, test_utils.TestCase):
 
     def test_create_documentversion_with_require_address(self):
         before = datetime.datetime.now()
-        version = self.create_documentversion_with_require_address()
+        version = self.create_documentversion(require_address=True)
         after = datetime.datetime.now()
         self.assertTrue(version.creation_time >= before)
         self.assertTrue(version.creation_time <= after)
@@ -142,6 +126,27 @@ class ModelTests(WitnessTestHelper, test_utils.TestCase):
         self.assertTrue(decision.creation_time >= before)
         self.assertTrue(decision.creation_time <= after)
 
+class FormTests(WitnessTestHelper, test_utils.TestCase):
+
+    def test_decision_form(self):
+        decision = self.create_decision()
+        form = DecisionForm(instance=decision)
+        self.assertTrue(form.fields['full_name'].widget.is_hidden)
+        self.assertFalse(form.fields['full_name'].widget.is_required)
+        self.assertTrue(form.fields['address'].widget.is_hidden)
+        self.assertFalse(form.fields['address'].widget.is_required)
+
+
+    def test_decision_form_with_require_name_and_address(self):
+        version = self.create_documentversion(
+                    require_name=True,
+                    require_address=True)
+        decision = self.create_decision(document_version=version)
+        form = DecisionForm(instance=decision)
+        self.assertFalse(form.fields['full_name'].widget.is_hidden)
+        self.assertTrue(form.fields['full_name'].widget.is_required)
+        self.assertFalse(form.fields['address'].widget.is_hidden)
+        self.assertTrue(form.fields['address'].widget.is_required)
 
 class ViewTests(WitnessTestHelper, test_utils.TestCase):
 
