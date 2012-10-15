@@ -4,6 +4,7 @@
 
 from django.contrib import admin
 from django.core import urlresolvers
+from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
 
 from witness.models import Document, DocumentVersion, Decision
@@ -88,16 +89,20 @@ class DocumentVersionAdmin(admin.ModelAdmin):
         return Decision.objects.filter(document_version=obj).count()
     num_signatures.short_description = "Number of Signatures"
 
-    actions = (clone_and_modify, retire)
-    list_display = ('title', 'number', 'document_title', 'num_signatures',
-                    'require_name', 'require_address')
-
-    def has_change_permission(self, request, obj=None):
+    def change_view(self, request, object_id, extra_context=None):
         '''
         If a document version has been signed,
         no one can edit it
         '''
-        return (Decision.objects.filter(document_version=obj).count()==0)
+        if Decision.objects.filter(document_version__id=object_id).count()!=0:
+            return HttpResponseBadRequest("The document has been signed")
+        return super(DocumentVersionAdmin, self).change_view(request,
+                object_id, extra_context=extra_context)
+
+    actions = (clone_and_modify, retire)
+    list_display = ('title', 'number', 'document_title', 'num_signatures',
+                    'require_name', 'require_address')
+
 
 class DecisionAdmin(admin.ModelAdmin):
     ''' Prevent admins from manually tampering with the decision '''
