@@ -59,7 +59,7 @@ def document_detail(request, document_slug, version_number):
             previous_versions = models.DocumentVersion.objects.filter(
                                                 document=document_version.document
                                             ).exclude(
-                                                number=version_number
+                                                id=document_version.id
                                             )
             all_users = list(set(models.Decision.objects.filter(
                         document_version=document_version

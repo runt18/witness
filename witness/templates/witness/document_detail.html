@@ -73,14 +73,10 @@ This is not the most recent version of this document. You can <a href="{{ latest
             </a>
           </td>
           <td>
-            <a href='{{ url('admin:witness_decision_change', decision.id) }}'>
-                {{ decision.action_text }}
-            </a>
+            {{ decision.action_text }}
           </td>
           <td>
-            <a href='{{ url('admin:witness_decision_change', decision.id) }}'>
-                {{ decision.last_update_time }}
-            </a>
+            {{ decision.last_update_time }}
           </td>
         </tr>
       {% endfor %}
@@ -88,16 +84,25 @@ This is not the most recent version of this document. You can <a href="{{ latest
   {% endif %}
   {% if previous_versions %}
     <h2>{{ _('Previous Versions of this Document') }}</h2>
-    <ul>
-      {% for dv in previous_versions %}
-        <li>
-        <a href='{{ url('document_detail',
-                        document_slug=dv.document.slug,
-                        version_number=dv.document.latest_version.number) }}'>
-            {{ dv.title }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
+    <table class="table">
+        <tr>
+            <th>Title</th>
+            <th>Version</th>
+        </tr>
+        {% for dv in previous_versions %}
+        <tr>
+            <td>
+                <a href='{{ url('document_detail',
+                                document_slug=dv.document.slug,
+                                version_number=dv.document.latest_version.number) }}'>
+                    {{ dv.title }}
+                </a>
+            </td>
+            <td>
+                {{ dv.number }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
   {% endif %}
 {% endblock %}
