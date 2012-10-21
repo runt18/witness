@@ -25,6 +25,9 @@ def home(request):
                         decisions__user=request.user
                     ).exclude(
                         is_retired=True
+                    ).order_by(
+                        "title",
+                        "-number"
                     ).distinct()
         my_responses = [dv.decisions.latest() for dv in my_dvs]
 
