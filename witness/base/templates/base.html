@@ -32,10 +32,10 @@
                             <a data-toggle="modal" href="/pages/intro/" data-target="#modal">What do I do?</a>
                         </li>
                         {% if user.is_superuser %}
-                        <li><a href="/pages/admin/">Info for admins</a></li>
+                        <li><a data-toggle="modal" href="/pages/admin/" data-target="#modal">Info for admins</a></li>
                         {% endif %}
                         <li class="divider"></li>
-                        <li><a href="/pages/about/">About Witness</a></li>
+                        <li><a data-toggle="modal" href="/pages/about/" data-target="#modal">About Witness</a></li>
                     </ul>
                     </li>
                 </ul>
