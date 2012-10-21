@@ -47,6 +47,10 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     'witness',
     # Admin interface
     'django.contrib.admin',
+    # Sites framework
+    'django.contrib.sites',
+    # Flatpages
+    'django.contrib.flatpages',
 ]
 
 
