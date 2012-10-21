@@ -23,10 +23,11 @@ def home(request):
     if request.user.is_authenticated():
         my_dvs = models.DocumentVersion.objects.filter(
                         decisions__user=request.user
+                    ).exclude(
+                        is_retired=True
                     ).distinct()
         my_responses = [dv.decisions.latest() for dv in my_dvs]
 
-    print my_responses
     data = {
             "documents" : documents,
             "my_responses" : my_responses
