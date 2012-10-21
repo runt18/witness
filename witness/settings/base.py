@@ -26,6 +26,7 @@ MINIFY_BUNDLES = {
             'js/witness/libs/jquery-1.7.2.js',
             'browserid/browserid.js',
             'bootstrap/js/bootstrap.min.js',
+            'js/witness/libs/jquery.tablesorter.min.js',
         ),
     },
 }

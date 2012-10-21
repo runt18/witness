@@ -45,6 +45,11 @@
     {% block site_js %}
     <script src='https://browserid.org/include.js'></script>
     {{ js('witness_js') }}
+    <script>
+        $(function(){
+            $(".table").tablesorter();
+        });
+    </script>
     {% endblock %}
 </body>
 </html>

@@ -21,58 +21,66 @@
   {% endif %}
   {% if my_responses %}
     <h2>{{ _('My Signed Documents') }}</h2>
-    <table class="table">
-        <tr>
-            <th>{{ _('Title') }}</th>
-            <th>{{ _('Version') }}</th>
-            <th>{{ _('Response') }}</th>
-            <th>{{ _('Date Signed') }}</th>
-        </tr>
-    {% for response in my_responses %}
-        {% with %} 
-        {% set document = response.document_version.document %}
-        {% set document_version = response.document_version%}
-        <tr>
-            <td>
-                <a href='{{ url('document_detail', document_slug=document.slug,
-                                version_number=document_version.number) }}'>
-                    {{ document_version.title }}
-                </a>
-            </td>
-            <td>
-                {{ document_version.number }}
-            </td>
-            <td>
-                {{ response.action_text }}
-            </td>
-            <td>
-                {{ response.creation_time }}
-            </td>
-        </tr>
-        {% endwith %}
-    {% endfor %}
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th>{{ _('Title') }}</th>
+                <th>{{ _('Response') }}</th>
+                <th>{{ _('Date Signed') }}</th>
+                <th>{{ _('Version') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for response in my_responses %}
+            {% with %} 
+            {% set document = response.document_version.document %}
+            {% set document_version = response.document_version%}
+            <tr>
+                <td>
+                    <a href='{{ url('document_detail', document_slug=document.slug,
+                        version_number=document_version.number) }}'>
+                        {{ document_version.title }}
+                    </a>
+                </td>
+                <td>
+                    {{ response.action_text }}
+                </td>
+                <td>
+                    {{ response.creation_time.strftime("%Y-%m-%dT%H:%M:%S%z") }}
+                </td>
+                <td>
+                    {{ document_version.number }}
+                </td>
+            </tr>
+            {% endwith %}
+            {% endfor %}
+        </tbody>
     </table>
   {% endif %}
   {% if documents %}
     <h2>{{ _('All Current Documents') }}</h2>
     <table class="table">
-      <tr>
-          <th>{{ _('Title') }}</th>
-          <th>{{ _('Version') }}</th>
-      </tr>
+      <thead>
+          <tr>
+              <th>{{ _('Title') }}</th>
+              <th>{{ _('Version') }}</th>
+          </tr>
+      </thead>
+      <tbody>
       {% for document in documents %}
-      <tr>
-          <td>
-              <a href='{{ url('document_detail', document_slug=document.slug,
-                  version_number=document.latest_version.number) }}'>
-                  {{ document.latest_version.title }}
-              </a>
-          </td>
-          <td>
-              {{ document.latest_version.number }}
-          </td>
-      </tr>
+          <tr>
+              <td>
+                  <a href='{{ url('document_detail', document_slug=document.slug,
+                      version_number=document.latest_version.number) }}'>
+                      {{ document.latest_version.title }}
+                  </a>
+              </td>
+              <td>
+                  {{ document.latest_version.number }}
+              </td>
+          </tr>
       {% endfor %}
+      </tbody>
     </table>
   {% else %}
     {% if not user.is_authenticated() %}

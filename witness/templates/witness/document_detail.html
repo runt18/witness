@@ -76,7 +76,7 @@ This is not the most recent version of this document. You can <a href="{{ latest
             {{ decision.action_text }}
           </td>
           <td>
-            {{ decision.last_update_time }}
+            {{ decision.last_update_time.strftime("%Y-%m-%dT%H:%M:%S%z") }}
           </td>
         </tr>
       {% endfor %}
@@ -85,24 +85,28 @@ This is not the most recent version of this document. You can <a href="{{ latest
   {% if previous_versions %}
     <h2>{{ _('Previous Versions of this Document') }}</h2>
     <table class="table">
-        <tr>
-            <th>Title</th>
-            <th>Version</th>
-        </tr>
-        {% for dv in previous_versions %}
-        <tr>
-            <td>
-                <a href='{{ url('document_detail',
-                                document_slug=dv.document.slug,
-                                version_number=dv.document.latest_version.number) }}'>
-                    {{ dv.title }}
-                </a>
-            </td>
-            <td>
-                {{ dv.number }}
-            </td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Version</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dv in previous_versions %}
+            <tr>
+                <td>
+                    <a href='{{ url('document_detail',
+                                    document_slug=dv.document.slug,
+                                    version_number=dv.document.latest_version.number) }}'>
+                        {{ dv.title }}
+                    </a>
+                </td>
+                <td>
+                    {{ dv.number }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
   {% endif %}
 {% endblock %}
