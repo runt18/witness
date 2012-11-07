@@ -29,11 +29,11 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a data-toggle="modal" href="/pages/intro/" data-target="#modal">What do I do?</a>
+                            <a data-toggle="modal" href="/pages/how-to-sign/" data-target="#modal">How do I sign a document?</a>
                         </li>
-                        {% if user.is_superuser %}
-                        <li><a data-toggle="modal" href="/pages/admin/" data-target="#modal">Info for admins</a></li>
-                        {% endif %}
+                        <li>
+                            <a data-toggle="modal" href="/pages/how-to-add/" data-target="#modal">How do I add a document?</a>
+                        </li>
                         <li class="divider"></li>
                         <li><a data-toggle="modal" href="/pages/about/" data-target="#modal">About Witness</a></li>
                     </ul>
