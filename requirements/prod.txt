@@ -18,7 +18,7 @@ GitPython==0.3.2.RC1
 
 # Security
 -e git://github.com/fwenzel/django-sha2.git@aa87553fdb2dba3011207820cda61fa1e8652f07#egg=django-sha2
--e git://github.com/jsocol/bleach.git@3657f7e32a114fcee91ed795414e4debbc5a5925#egg=bleach
+-e git://github.com/jsocol/bleach.git@d61e8ee3ba3382d08ed236e7e402d048ac8179c4#egg=bleach
 -e git://github.com/mozilla/django-session-csrf.git@15492526b23cdad56fe3df1342e2d82ec5d17c18#egg=django-session-csrf
 cef==0.3
 

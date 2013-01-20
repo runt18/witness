@@ -1,5 +1,6 @@
 from django import forms
 from witness.models import Decision
+import bleach
 
 class DecisionForm(forms.ModelForm):
 
@@ -26,7 +27,12 @@ class DecisionForm(forms.ModelForm):
         else:
             self.fields['address'] = forms.CharField(required=False,
                                         widget=forms.HiddenInput())
-
+    def clean(self):
+        cleaned_data = super(DecisionForm, self).clean()
+        for key in ('full_name', 'address', 'action_text'):
+            cleaned_data[key] = bleach.clean(cleaned_data[key])
+        return cleaned_data
+        
     class Meta:
         model = Decision
         fields = ('full_name', 'address', 'is_agreed')

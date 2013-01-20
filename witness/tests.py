@@ -148,6 +148,15 @@ class FormTests(WitnessTestHelper, test_utils.TestCase):
         self.assertFalse(form.fields['address'].widget.is_hidden)
         self.assertTrue(form.fields['address'].widget.is_required)
 
+    def test_decision_form_and_save(self):
+        decision = self.create_decision()
+        form = DecisionForm(instance=decision)
+        form.fields['full_name'] = "<script>bad name</script>"
+        form.fields['address'] = "<script>bad stuff</script>"
+        #cleaned_data = form.clean()
+        # TODO - test input sanitization
+
+
 class ViewTests(WitnessTestHelper, test_utils.TestCase):
 
     def test_home_page_lists_documents_ordered_by_title(self):
