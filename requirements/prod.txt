@@ -44,7 +44,7 @@ South==0.7.5
 -e git://github.com/mozilla/funfactory.git@85980cc1ea9425c2bfffd6d86af01ef50ebcac2e#egg=funfactory
 
 # BrowserID
--e git://github.com/mozilla/django-browserid.git#egg=django-browserid
+-e git://github.com/mozilla/django-browserid.git@865407eda9bef163416868dd6c6b09a42ab6e866#egg=django-browserid
 
 # Markdown
 Markdown==2.1.1
