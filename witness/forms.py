@@ -29,7 +29,7 @@ class DecisionForm(forms.ModelForm):
                                         widget=forms.HiddenInput())
     def clean(self):
         cleaned_data = super(DecisionForm, self).clean()
-        for key in ('full_name', 'address', 'action_text'):
+        for key in ('full_name', 'address'):
             cleaned_data[key] = bleach.clean(cleaned_data[key])
         return cleaned_data
         
