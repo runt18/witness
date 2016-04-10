@@ -22,8 +22,8 @@ class WitnessTestHelper(object):
     def create_document(self, **kwargs):
         self.slug_counter = getattr(self, 'slug_counter', 0) + 1
         defaults = {
-            'title': 'Test Document %d' % self.slug_counter,
-            'slug': 'doc-%d' % self.slug_counter,
+            'title': 'Test Document {0:d}'.format(self.slug_counter),
+            'slug': 'doc-{0:d}'.format(self.slug_counter),
         }
         defaults.update(kwargs)
         return Document.objects.create(**defaults)
@@ -31,8 +31,8 @@ class WitnessTestHelper(object):
     def create_documentversion(self, **kwargs):
         self.slug_counter = getattr(self, 'slug_counter', 0) + 1
         defaults = {
-            'number': 'v-%d' % self.slug_counter,
-            'title': 'Test Version %d' % self.slug_counter,
+            'number': 'v-{0:d}'.format(self.slug_counter),
+            'title': 'Test Version {0:d}'.format(self.slug_counter),
             'text': 'Lorem ipsum dolor.',
             'yes_action_text': 'Yes',
             'no_action_text': 'No',
@@ -46,7 +46,7 @@ class WitnessTestHelper(object):
     def create_decision(self, **kwargs):
         self.slug_counter = getattr(self, 'slug_counter', 0) + 1
         defaults = {
-            'email': 'test-%d@example.com' % self.slug_counter,
+            'email': 'test-{0:d}@example.com'.format(self.slug_counter),
             'full_name': 'John Doe',
             'ip_address': '111.222.333.444',
             'action_text': 'Yes',
@@ -55,7 +55,7 @@ class WitnessTestHelper(object):
         if 'document_version' not in kwargs:
             defaults['document_version'] = self.create_documentversion()
         if 'user' not in kwargs:
-            defaults['user'] = User.objects.create(username='test-%d' % self.slug_counter)
+            defaults['user'] = User.objects.create(username='test-{0:d}'.format(self.slug_counter))
         defaults.update(kwargs)
         return Decision.objects.create(**defaults)
 
@@ -65,7 +65,7 @@ class WitnessTestHelper(object):
         old_prefix = get_url_prefix()
         old_locale = get_language()
         rf = test_utils.RequestFactory()
-        set_url_prefix(Prefixer(rf.get('/%s/' % (locale,))))
+        set_url_prefix(Prefixer(rf.get('/{0!s}/'.format(locale))))
         activate(locale)
         yield
         set_url_prefix(old_prefix)

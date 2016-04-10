@@ -31,7 +31,7 @@ class DocumentAdmin(admin.ModelAdmin):
         ''' Add a new version for a document '''
         try:
             document = queryset.get()
-            return redirect( "%s?document=%s" % (
+            return redirect( "{0!s}?document={1!s}".format(
                     urlresolvers.reverse('admin:witness_documentversion_add'),
                     document.id)
                    )
@@ -79,8 +79,8 @@ class DocumentVersionAdmin(admin.ModelAdmin):
         queryset.update(is_retired=True)
         self.message_user(
                 request,
-                "Successfully retired %s document version(s)" %
-                    queryset.count()
+                "Successfully retired {0!s} document version(s)".format(
+                    queryset.count())
             )
     def document_title(self, obj):
         return str(obj.document.title)

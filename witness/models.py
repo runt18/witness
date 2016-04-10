@@ -48,7 +48,7 @@ class DocumentVersion(models.Model):
     require_address = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return "%s - %s" % (self.document, self.title)
+        return "{0!s} - {1!s}".format(self.document, self.title)
 
     def get_absolute_url(self):
         return reverse(
@@ -88,7 +88,7 @@ class Decision(models.Model):
                 default=None)
 
     def __unicode__(self):
-        return "%s %s" % (self.document_version.title, self.action_text)
+        return "{0!s} {1!s}".format(self.document_version.title, self.action_text)
 
     class Meta:
         verbose_name = "3. Decision"

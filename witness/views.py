@@ -95,9 +95,9 @@ def document_detail(request, document_slug, version_number):
                                 else document_version.no_action_text
                 decision.save()
 
-                message = "Here's the document: %s " % request.build_absolute_uri(
-                        document_version.get_absolute_url())
-                send_mail(subject="You signed %s" % (decision),
+                message = "Here's the document: {0!s} ".format(request.build_absolute_uri(
+                        document_version.get_absolute_url()))
+                send_mail(subject="You signed {0!s}".format((decision)),
                           message=message,
                           from_email='admin@example.com',
                           recipient_list=(user.email,),)

@@ -94,16 +94,16 @@ def update_site(env, debug):
     for cmd, cmd_args in commands:
         if CHDIR == cmd:
             if debug:
-                sys.stdout.write("cd %s\n" % cmd_args)
+                sys.stdout.write("cd {0!s}\n".format(cmd_args))
             os.chdir(cmd_args)
         elif EXEC == cmd:
             if debug:
-                sys.stdout.write("%s\n" % cmd_args)
+                sys.stdout.write("{0!s}\n".format(cmd_args))
             if not 0 == os.system(cmd_args):
                 error_updating = True
                 break
         else:
-            raise Exception("Unknown type of command %s" % cmd)
+            raise Exception("Unknown type of command {0!s}".format(cmd))
 
     if error_updating:
         sys.stderr.write("There was an error while updating. Please try again "
@@ -120,8 +120,8 @@ def main():
         """.rstrip())
 
     options = OptionParser(usage=usage)
-    e_help = "Type of environment. One of (%s) Example: update_site.py \
-        -e stage" % '|'.join(ENV_BRANCH.keys())
+    e_help = "Type of environment. One of ({0!s}) Example: update_site.py \
+        -e stage".format('|'.join(ENV_BRANCH.keys()))
     options.add_option("-e", "--environment", help=e_help)
     options.add_option("-v", "--verbose",
                        help="Echo actions before taking them.",
