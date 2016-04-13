@@ -32,7 +32,7 @@ MINIFY_BUNDLES = {
 }
 
 # Defines the views served for root URLs.
-ROOT_URLCONF = '%s.urls' % PROJECT_MODULE
+ROOT_URLCONF = '{0!s}.urls'.format(PROJECT_MODULE)
 
 INSTALLED_APPS = list(INSTALLED_APPS) + [
     # Deployment.
@@ -42,7 +42,7 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     # Additional Mozilla shared apps.
     'django_browserid',
     # Application base, containing global templates.
-    '%s.base' % PROJECT_MODULE,
+    '{0!s}.base'.format(PROJECT_MODULE),
     # Main application.
     'witness',
     # Admin interface
@@ -65,9 +65,9 @@ JINGO_EXCLUDE_APPS = [
 # Tells the extract script what files to look for L10n in and what function
 # handles the extraction. The Tower library expects this.
 DOMAIN_METHODS['messages'] = [
-    ('%s/**.py' % PROJECT_MODULE,
+    ('{0!s}/**.py'.format(PROJECT_MODULE),
         'tower.management.commands.extract.extract_tower_python'),
-    ('%s/**/templates/**.html' % PROJECT_MODULE,
+    ('{0!s}/**/templates/**.html'.format(PROJECT_MODULE),
         'tower.management.commands.extract.extract_tower_template'),
     ('templates/**.html',
         'tower.management.commands.extract.extract_tower_template'),

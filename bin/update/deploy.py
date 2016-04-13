@@ -20,7 +20,7 @@ def update_code(ctx, tag):
     """Update the code to a specific git reference (tag/sha/etc)."""
     with ctx.lcd(settings.SRC_DIR):
         ctx.local('git fetch')
-        ctx.local('git checkout -f %s' % tag)
+        ctx.local('git checkout -f {0!s}'.format(tag))
         ctx.local('git submodule sync')
         ctx.local('git submodule update --init --recursive')
 
@@ -67,8 +67,7 @@ def install_cron(ctx):
     with ctx.lcd(settings.SRC_DIR):
         ctx.local('python2.6 ./bin/crontab/gen-crons.py -w %s -u apache > '
                   '/etc/cron.d/.%' % (settings.WWW_DIR, settings.CRON_NAME))
-        ctx.local('mv /etc/cron.d/.%s /etc/cron.d/%s' %
-                  (settings.CRON_NAME,  settings.CRON_NAME))
+        ctx.local('mv /etc/cron.d/.{0!s} /etc/cron.d/{1!s}'.format(settings.CRON_NAME, settings.CRON_NAME))
 
 
 @task
@@ -81,14 +80,14 @@ def checkin_changes(ctx):
 def deploy_app(ctx):
     """Call the remote update script to push changes to webheads."""
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
-    ctx.remote('/bin/touch %s' % settings.REMOTE_WSGI)
+    ctx.remote('/bin/touch {0!s}'.format(settings.REMOTE_WSGI))
 
 
 @hostgroups(settings.CELERY_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def update_celery(ctx):
     """Update and restart Celery."""
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
-    ctx.remote('/sbin/service %s restart' % settings.CELERY_SERVICE)
+    ctx.remote('/sbin/service {0!s} restart'.format(settings.CELERY_SERVICE))
 
 
 @task

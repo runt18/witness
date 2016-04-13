@@ -24,12 +24,12 @@ def main():
     if not opts.webapp:
         parser.error('-w must be defined')
 
-    ctx = {'django': 'cd %s; %s manage.py' % (opts.webapp, opts.python)}
-    ctx['cron'] = '%s cron' % ctx['django']
+    ctx = {'django': 'cd {0!s}; {1!s} manage.py'.format(opts.webapp, opts.python)}
+    ctx['cron'] = '{0!s} cron'.format(ctx['django'])
 
     if opts.user:
         for k, v in ctx.iteritems():
-            ctx[k] = '%s %s' % (opts.user, v)
+            ctx[k] = '{0!s} {1!s}'.format(opts.user, v)
 
     # Needs to stay below the opts.user injection.
     ctx['python'] = opts.python
